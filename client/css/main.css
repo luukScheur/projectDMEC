@@ -7,3 +7,29 @@
     color: #A3FF75;
     background: inherit;
 }
+
+/* --------------------------------------------------------------------- 
+ *	Homepage
+ * -------------------------------------------------------------------- */
+ 
+.homepageblock {
+	overflow: hidden;
+	padding: 1%;
+	max-height: 300px;
+}
+.homepageblock .content {
+	border-radius: 3px;
+	padding: 1%;
+	border: 1px solid black;
+}
+.homepageblock .content i {
+	position: relative;
+	float: right;
+	cursor: pointer;
+}
+.homepageblockfooter {
+	border: 1px solid black;
+	overflow: hidden;
+	margin: 1%;
+	background-color: buttonface;
+}

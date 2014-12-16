@@ -1,5 +1,5 @@
 "use strict";
-var MOOCBOOKApp = angular.module("MOOCBOOKApp", ['ngRoute']);
+var MOOCBOOKApp = angular.module("MOOCBOOKApp", ['ngRoute', 'ngResource']);
 
 /*
 MOOCBOOKApp.factory('socket', function() {

@@ -6,7 +6,16 @@
 	<script src = "/js/angular/angular.min.js"></script>
 	<script src = "/js/angular/angular-route.min.js"></script>
 	<script src = "/js/angular/angular-resource.min.js"></script>
-	<script src = "/js/docentController.js"></script>
+	
+	<!-- Controllers -->
+	<script src = "/js/homeIngelogdController.js"></script>
+	<script src = "/js/materiaalOverzichtController.js"></script>
+	
+	<!-- database json files -->
+	<script src = "/js/jsonFiles/homepageBlocks.js"></script>
+	<script src = "/js/jsonFiles/material.js"></script>
+	
+	<!-- app files -->
 	<script src = "/js/routes.js"></script>
 	<script src = "/js/jquery-1.11.1.min.js"></script>
 	<script src = "/socket.io/socket.io.js"></script>
@@ -41,7 +50,7 @@
 			</li>
 		  </ul>
 		  <ul class="nav navbar-nav navbar-right">
-			<li><a href="#">Logout</a></li>
+			<li><a href="#/materiaalOverzicht">Materiaal</a></li>
 		  </ul>
 		</div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->

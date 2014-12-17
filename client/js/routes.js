@@ -16,12 +16,12 @@ MOOCBOOKApp.filter('filterTypes', function() {
 				});
     };
 })
-/*
+
 MOOCBOOKApp.factory('socket', function() {
 	var socket = io.connect('http://localhost:3000');
 	return socket;
 });
-*/
+
 
 MOOCBOOKApp.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/home', {

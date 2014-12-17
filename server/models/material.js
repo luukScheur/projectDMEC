@@ -48,14 +48,16 @@ exports.getMaterial = function (id, callback) {
 
 exports.postMaterial = function (material, callback) {
     'use strict';
+    console.log(material);
     var newMaterial = new Material();
     newMaterial.title = material.title;
     newMaterial.description = material.description;
     newMaterial.type = material.type;
-    newMaterial.likes = material.likes;
-    newMaterial.views = material.publishdate;
-    newMaterial.publishdate = material.publishdate;
+    newMaterial.likes = material.likes || 0;
+    newMaterial.views = material.publishdate || 0;
+    newMaterial.publishdate = material.publishdate || new Date();
     newMaterial.imagesrc = material.imagesrc;
+    console.log(newMaterial);
 
     newMaterial.save(function (err, material) {
         if (err) {

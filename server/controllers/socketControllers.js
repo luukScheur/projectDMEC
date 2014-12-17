@@ -11,7 +11,7 @@ var response = function(message, error, data) {
 
 module.exports = function (io) {
 	io.sockets.on('connection', function (socket) {
-		console.log('iemand is connected', socket);
+		console.log('iemand is connected');
 		socket.on('disconnect', function() {
 			console.log('iemand is disconnected');
    		});

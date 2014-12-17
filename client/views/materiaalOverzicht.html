@@ -1,13 +1,12 @@
 <div class="col-lg-3 materialFilter">
 
-    <span>Zoek materiaal</span>
-    <br>
-    <div>
-        <input id="materialSearch" type="text">
-    </div>
-    <br><br>
-
 	<h2>Filter </h2>
+  <span>Zoek materiaal</span>
+  <br>
+  <div>
+      <input ng-model="search" id="materialSearch" type="text">
+  </div>
+  <br>
 	<span>Sorteren op</span>
 	<br>
 	<select ng-model="sort">
@@ -23,7 +22,7 @@
 	<span>Soort materiaal</span>
 	<br>
 	<div id="materialTypesFilter" ng-repeat="type in materialTypes" ng-click="toggleSelection(type)">
-		<input type="checkbox" 
+		<input type="checkbox"
 			ng-checked="selectedTypes.indexOf('{{type}}') > -1"
 			ng-value="type">
 		{{type}}
@@ -33,7 +32,7 @@
 <div class="col-lg-9">
 	<h2>Materiaal overzicht</h2>
 	<!-- filter filterTypes is custom (see routes.js)  -->
-	<div class="col-lg-3" ng-repeat="item in material | filterTypes: selectedTypes |  orderBy : sort : sortOrder">
+	<div class="col-lg-3" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
 		<h4>{{item.title}}</h4>
 		<p> {{item.type}} </p>
 		<span>	beschrijving: {{item.description}}

@@ -1,6 +1,6 @@
-var homeIngelogdController = function ($scope, $routeParams, $location, $window) {
-	//var socket = {};
-	//socket = io.connect('http://localhost:3000');
+var homeLoggedInController = function ($scope, $routeParams, $location, $window) {
+	var socket = {};
+	socket = io.connect('http://localhost:3000');
 	$scope.blocks = homepageBlocks;
 	$scope.selectedBlocks = [$scope.blocks[0],$scope.blocks[1],$scope.blocks[2],$scope.blocks[3],$scope.blocks[4],$scope.blocks[5]];
 	$scope.otherBlocks = function () {
@@ -12,7 +12,7 @@ var homeIngelogdController = function ($scope, $routeParams, $location, $window)
 		}
 		return blocksLeft;
 	};
-	
+
 	$scope.removeBlock = function (id) {
 		$scope.selectedBlocks.splice(id, 1);
 		console.log($scope.selectedBlocks);
@@ -22,5 +22,5 @@ var homeIngelogdController = function ($scope, $routeParams, $location, $window)
 			$scope.selectedBlocks.push($scope.blocks[id]);
 		}
 	};
-	
+
 };

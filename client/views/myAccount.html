@@ -1,0 +1,50 @@
+<div class="col-lg-3 myAccountPanel">
+  <h2>Martijn Velders</h2>
+  <img src="http://www.lorempixel.com/200/200">
+  <br><br>
+  <span> Een aardige jongen uit DMEC projectgroep 9, hij is een C-er en eigenlijk ook een beetje een I-er. </span>
+  <br><br>
+  <span>12 volgend</span>
+  <br>
+  <span>123 likes</span>
+  <hr>
+  <button ng-click="tab='lesson'" class="btn">Mijn lessen</button>
+  <button ng-click="tab='material'" class="btn">Mijn materiaal</button>
+  <button ng-click="tab='comment'" class="btn">Mijn reacties</button>
+  <button ng-click="tab='contribution'" class="btn">Mijn bijdrage</button>
+</div>
+
+<div class="col-lg-9">
+  <div class="col-lg-4">
+    <h2>Items</h2>
+  </div>
+  <div class="col-lg-8 searchDiv">
+    <div>
+      <input type="text" placeholder="search">
+    </div>
+  </div>
+
+  <div class="col-lg-12">
+    <div ng-show="tab=='lesson'">
+      <h2>Lessen</h2>
+      <div class="col-lg-3 nopadding">
+        Mappenstructuur
+      </div>
+      <div class="col-lg-9">
+        Lesseninhoud
+      </div>
+
+    </div>
+    <div ng-show="tab=='material'">
+      <h2>Materiaal</h2>
+      <a href="#/material/0"<button class="btn btn-success">Nieuw materiaal</button>
+    </div>
+    <div ng-show="tab=='comment'">
+      <h2>Reacties</h2>
+    </div>
+    <div ng-show="tab=='contribution'">
+      <h2>Bijdrage</h2>
+    </div>
+
+  </div>
+</div>

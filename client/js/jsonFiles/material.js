@@ -1,5 +1,5 @@
 
-var materialTypes = ['pdf', 'image', 'youtube', 'opdracht', 'word', 'voorbeeld']; 
+var materialTypes = ['pdf', 'image', 'youtube', 'opdracht', 'word', 'voorbeeld'];
 
 // publishdate format: mm/dd/yyyy
 var material = [
@@ -64,4 +64,3 @@ var material = [
 		imagesrc: null
 	}
 ];
-

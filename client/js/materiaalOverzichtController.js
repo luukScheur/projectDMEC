@@ -4,8 +4,20 @@ var materiaalOverzichtController = function ($scope, $routeParams, $location, $w
 	$scope.material = material;
 	$scope.materialTypes = materialTypes;
 	console.log($scope.material);
-	
-	//Filters
+
+    $http.get("/material")
+        .success(function (data) {
+            console.log(data)
+        })
+        .error(function (data, status) {
+            alert("AJAX ERROR");
+            console.log("ERROR: show question controller error", status, data);
+        });
+
+    //Search
+    //$scope.searchWord = $(".materialSearch").value();
+
+    //Filters
 	$scope.sort = 'id';
 	$scope.sortOrder = false;
 	$scope.selectedTypes = [];

@@ -25,17 +25,32 @@ MOOCBOOKApp.factory('socket', function() {
 
 MOOCBOOKApp.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/home', {
-		templateUrl: './views/homeIngelogd.html',
-		controller: homeIngelogdController
+		templateUrl: './views/homeLoggedIn.html',
+		controller: homeLoggedInController
 	});
-	$routeProvider.when('/materiaalOverzicht', {
-		templateUrl: './views/materiaalOverzicht.html',
-		controller: materiaalOverzichtController
+	$routeProvider.when('/materialOverview', {
+		templateUrl: './views/materialOverview.html',
+		controller: materialOverviewController
 	});
+<<<<<<< HEAD
     $routeProvider.when('/videoBekijken', {
         templateUrl: './views/videoBekijken.html',
         controller: videoOverzichtController
     });
+=======
+  $routeProvider.when('/material', {
+    templateUrl: './views/material.html',
+    controller: materialController
+  });
+  $routeProvider.when('/material/:id', {
+    templateUrl: './views/material.html',
+    controller: materialController
+  });
+  $routeProvider.when('/myAccount', {
+    templateUrl: './views/myAccount.html',
+    controller: myAccountController
+  });
+>>>>>>> aeaba1abd5efba9f19db6f75851bee2a9c8a4bec
 	$routeProvider.otherwise({
 		redirectTo: "/home"
 	});

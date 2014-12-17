@@ -1,4 +1,4 @@
-var materiaalOverzichtController = function ($http, $scope, $routeParams, $location, $window) {
+var materialOverviewController = function ($http, $scope, $routeParams, $location, $window) {
 	var socket = {};
 	socket = io.connect('http://localhost:3000');
 

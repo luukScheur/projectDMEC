@@ -32,6 +32,10 @@ MOOCBOOKApp.config(['$routeProvider', function ($routeProvider) {
 		templateUrl: './views/materiaalOverzicht.html',
 		controller: materiaalOverzichtController
 	});
+    $routeProvider.when('/videoBekijken', {
+        templateUrl: './views/videoBekijken.html',
+        controller: videoOverzichtController
+    });
 	$routeProvider.otherwise({
 		redirectTo: "/home"
 	});

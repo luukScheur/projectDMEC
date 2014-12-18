@@ -7,7 +7,8 @@ var VideoSchema = mongoose.Schema({
     likes : {type : Number, default : 0},
     views : {type : Number, default : 0},
     publishdate : {type : Date, default : Date.now},
-    videoUrl : {type: String}
+    videoUrl : {type: String},
+    tags : {type: []}
 }, {collection : "videos"});
 
 var Video = mongoose.model('Video', VideoSchema);
@@ -49,11 +50,11 @@ exports.postVideo = function (video, callback) {
     var newVideo = new Video();
     newVideo.title = video.title;
     newVideo.description = video.description;
-    newVideo.type = video.type;
     newVideo.likes = video.likes || 0;
     newVideo.views = video.publishdate || 0;
     newVideo.publishdate = video.publishdate || new Date();
-    newVideo.imagesrc = video.imagesrc;
+    newVideo.videoUrl = video.videoUrl;
+    newVideo.tags = video.tags;
     console.log(newVideo);
 
     newVideo.save(function (err, video) {

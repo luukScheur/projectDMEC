@@ -1,0 +1,71 @@
+::-moz-selection { /* Code for Firefox */
+    color: #A3FF75;
+    background: inherit;
+}
+
+::selection {
+    color: #A3FF75;
+    background: inherit;
+}
+
+.nopadding {
+  padding: 0 !important;
+}
+.nomargin {
+  margin: 0 !important;
+}
+/* ---------------------------------------------------------------------
+ *	Homepage
+ * -------------------------------------------------------------------- */
+
+.homepageblock {
+	overflow: hidden;
+	padding: 1%;
+	max-height: 300px;
+}
+.homepageblock .content {
+	border-radius: 3px;
+	padding: 1%;
+	border: 1px solid black;
+}
+.homepageblock .content i {
+	position: relative;
+	float: right;
+	cursor: pointer;
+}
+.homepageblockfooter {
+	border: 1px solid black;
+	overflow: hidden;
+	margin: 1%;
+	background-color: buttonface;
+}
+
+/* ---------------------------------------------------------------------
+ *	Material Overview
+ * -------------------------------------------------------------------- */
+
+#materialTypesFilter {
+	cursor: pointer;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+.materialFilter {
+	border-right: 1px solid black;
+}
+
+/* ---------------------------------------------------------------------
+ *	MyAccount
+ * -------------------------------------------------------------------- */
+
+.myAccountPanel {
+  border-right: 1px solid black;
+}
+.myAccountPanel button {
+  width: 100%;
+}
+.searchDiv div{
+  float: right;
+  margin-top: 25px;
+}

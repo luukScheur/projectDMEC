@@ -1,0 +1,18 @@
+<h2> nieuw materiaal </h2>
+<form>
+  <label> Titel </label>
+  <br>
+  <input ng-model="title" type="text">
+  <br>
+  <label> Omschrijving </label>
+  <br>
+  <textarea ng-model="description"></textarea>
+  <br>
+  <label> Type </label>
+  <br>
+  <select>
+    <option ng-model="palla" ng-repeat="type in materialTypes">
+      {{type}}
+    </option>
+  </select>
+  <input id="image-file" type="file" />

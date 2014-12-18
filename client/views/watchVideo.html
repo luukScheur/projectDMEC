@@ -1,0 +1,45 @@
+<div class="col-lg-3 materialFilter">
+
+	<h2>Filter </h2>
+  <span>Zoek materiaal</span>
+  <br>
+  <div>
+      <input ng-model="search" id="materialSearch" type="text">
+  </div>
+  <br>
+	<span>Sorteren op</span>
+	<br>
+	<select ng-model="sort">
+		<option value='views'>Views</option>
+		<option value='likes'>Likes</option>
+		<option value='publishdate'>Datum</option>
+	</select>
+	<select ng-model="sortOrder">
+		<option value="true">Aflopend</option>
+		<option value="false">Oplopend</option>
+	</select>
+	<br><br>
+	<span>Soort materiaal</span>
+	<br>
+	<div id="materialTypesFilter" ng-repeat="type in materialTypes" ng-click="toggleSelection(type)">
+		<input type="checkbox"
+			ng-checked="selectedTypes.indexOf('{{type}}') > -1"
+			ng-value="type">
+		{{type}}
+	</div>
+</div>
+
+<div class="col-lg-9">
+	<h2>Materiaal overzicht</h2>
+	<!-- filter filterTypes is custom (see routes.js)  -->
+	<div class="col-lg-3" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
+		<h4>{{item.title}}</h4>
+		<p> {{item.type}} </p>
+		<span>	beschrijving: {{item.description}}
+				type: {{item.type}}
+				likes: {{item.likes}}
+				views: {{item.views}}
+				publishdate: {{item.publishdate}}
+		</span>
+		<img ng-show="item.type=='image'" src="{{item.imagesrc}}">
+</div>

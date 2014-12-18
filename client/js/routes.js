@@ -32,6 +32,10 @@ MOOCBOOKApp.config(['$routeProvider', function ($routeProvider) {
 		templateUrl: './views/materialOverview.html',
 		controller: materialOverviewController
 	});
+  $routeProvider.when('/watchVideo', {
+      templateUrl: './views/watchVideo.html',
+      controller: videoController
+  });
   $routeProvider.when('/material', {
     templateUrl: './views/material.html',
     controller: materialController

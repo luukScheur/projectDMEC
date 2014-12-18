@@ -6,6 +6,7 @@ var materialTypes = ['pdf', 'image', 'youtube', 'opdracht', 'word', 'voorbeeld']
 var MaterialSchema = mongoose.Schema({
     title : {type : String, required : true},
     description : {type : String, required : true},
+    author: {type: String, required : true},
     type : {type : String, required : true},
     likes : {type : Number, default : 0},
     views : {type : Number, default : 0},
@@ -34,6 +35,18 @@ exports.getMaterials = function (callback) {
     });
 }
 
+exports.getMaterialsByAuthor = function (id, callback) {
+    'use strict';
+    Material.find({author : id}, function (err, materials) {
+        if (err) {
+            console.log(err);
+            callback(response("het zoeken naar de vragen is mislukt.", {}));
+        } else {
+            callback(response("het zoeken naar de vragen is gelukt.", materials));
+        }
+    });
+}
+
 exports.getMaterial = function (id, callback) {
     'use strict';
     Material.findOne({_id : id}, function (err, material) {
@@ -53,6 +66,7 @@ exports.postMaterial = function (material, callback) {
     newMaterial.title = material.title;
     newMaterial.description = material.description;
     newMaterial.type = material.type;
+    newMaterial.author = material.author;
     newMaterial.likes = material.likes || 0;
     newMaterial.views = material.publishdate || 0;
     newMaterial.publishdate = material.publishdate || new Date();

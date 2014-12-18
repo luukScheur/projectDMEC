@@ -12,6 +12,11 @@ exports.getMaterials = function (req, res) {
 		res.send(data);
 	});
 };
+exports.getMaterialsByAuthor = function (req, res) {
+	material.getMaterialsByAuthor(req.params.id, function(data) {
+		res.send(data);
+	});
+};
 exports.getMaterial = function (req, res) {
 	material.getMaterial(req.params.id, function(data) {
 		res.send(data);

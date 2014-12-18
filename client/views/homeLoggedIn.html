@@ -1,5 +1,12 @@
 <div class="col-lg-12">
 	<h2>Homepage voor ingelogde docent:</h2>
+	<div class="col-lg-12">
+		Ingelogd als {{user.name}}. Of kies een andere gebruiker: 
+		<select id="selectUser">
+			<option ng-model="username" value="{{user._id}}" ng-repeat="user in users">{{user.name}}</option>
+		</select>
+
+	</div>
 	<div class="homepageblock col-lg-4" ng-repeat="block in selectedBlocks">
 		<div id="block{{block.id}}" class="content">
 			<i ng-click="removeBlock('{{$index}}')" class="fa fa-remove fa-lg"></i>
@@ -12,8 +19,8 @@
 	<div id="blockfooter" class="homepageblockfooter col-lg-12">
 		<i class="fa fa-chevron-circle-right fa-lg"></i>
 		<button ng-click="addBlock(block.id)" class="btn" ng-repeat="block in otherBlocks()">
-			<i class="fa fa-plus"></i> {{block.title}} 
+			<i class="fa fa-plus"></i> {{block.title}}
 		</button>
 	</div>
-	
+
 </div>

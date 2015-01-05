@@ -34,14 +34,33 @@ var videoController = function ($http, $scope, $routeParams, $location, $window)
                     }
                 }
 
-                console.log(matches + " >= " + Math.ceil($scope.videos[i].tags.length / 2));
+                $scope.videos[i].matches = matches;
 
-                if($scope.videos[i]._id == $routeParams.id || matches >! Math.ceil($scope.videos[i].tags.length / 2)){
-                    console.log("splice");
+                console.log("matches"+ $scope.videos[i].matches);
+
+                if($scope.videos[i]._id == $routeParams.id){
                     $scope.videos.splice(i,i);
                 }
 
             }
+
+            console.log($scope.videos);
+
+            function compare(a,b) {
+                if (a.matches < b.matches)
+                    return -1;
+                if (a.matches > b.matches)
+                    return 1;
+                return 0;
+            }
+
+            $scope.videos.sort(compare).reverse();
+
+            if ($scope.videos.length > 10 ) {
+
+                $scope.videos.splice(10, $scope.videos.length);
+            }
+
         })
         .error(function (data, status) {
             alert("AJAX ERROR");

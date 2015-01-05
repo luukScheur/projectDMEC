@@ -1,12 +1,14 @@
 <div class="col-lg-3 myAccountPanel">
-  <h2>Martijn Velders</h2>
-  <img src="http://www.lorempixel.com/200/200">
+  <h2>{{user.name}}</h2>
+  <img src="{{user.profilePicture}}">
   <br><br>
-  <span> Een aardige jongen uit DMEC projectgroep 9, hij is een C-er en eigenlijk ook een beetje een I-er. </span>
-  <br><br>
-  <span>12 volgend</span>
+  <span>Leeftijd: {{user.age}}</span>
   <br>
-  <span>123 likes</span>
+  <span>Geslacht: {{user.gender}}</span>
+  <br><br>
+  <span ng-show="user.school">School: {{user.school}}</span>
+  <br>
+  <span>123 likes (statisch)</span>
   <hr>
   <button ng-click="tab='lesson'" class="btn">Mijn lessen</button>
   <button ng-click="tab='material'" class="btn">Mijn materiaal</button>
@@ -38,6 +40,11 @@
     <div ng-show="tab=='material'">
       <h2>Materiaal</h2>
       <a href="#/material/0"<button class="btn btn-success">Nieuw materiaal</button></a>
+      <div ng-repeat="material in myMaterial" class="col-lg-12">
+        <h4>{{material.title}}</h4>
+        <span>Type: {{material.type}}, likes: {{material.likes}}, views: {{material.views}}</span>
+        <span>door: {{material.author}}</span>
+      </div>
     </div>
     <div ng-show="tab=='comment'">
       <h2>Reacties</h2>

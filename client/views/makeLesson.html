@@ -1,0 +1,47 @@
+<div class="col-lg-3">
+<h2> Filters</h2>
+
+
+</div>
+
+<div class="col-lg-9 videosSidebar">
+    <h2> Gerelateerde video's</h2>
+    <div class="tabs">
+        <ul class="tab-links">
+            <li class="active"><a href="#tab1">Tab #1</a></li>
+            <li><a href="#tab2">Tab #2</a></li>
+            <li><a href="#tab3">Tab #3</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="tab1" class="tab active">
+                <div class="col-lg-3 {{item.type}} .block" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
+                    <h4>{{item.title}}</h4>
+                    <p> {{item.type}} </p>
+                    <span>Door: {{item.author}}</span>
+                    </div>
+            </div>
+
+            <div id="tab2" class="tab">
+                <div class="col-lg-3" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
+                    <h4>{{item.title}}</h4>
+                    <p> {{item.type}} </p>
+                    <span>Door: {{item.author}}</span>
+                </div>
+
+            </div>
+
+            <div id="tab3" class="tab">
+                <div class="col-lg-3" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
+                    <h4>{{item.title}}</h4>
+                    <p> {{item.type}} </p>
+                    <span>Door: {{item.author}}</span>
+                 </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+            </div>
+</div>

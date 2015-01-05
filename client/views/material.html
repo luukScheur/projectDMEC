@@ -1,8 +1,13 @@
-<h2> nieuw materiaal </h2>
+<div ng-show="new==true">
+  <h2> nieuw materiaal </h2>
+</div>
+<div ng-show="new==false">
+  <h2> bewerk materiaal </h2>
+</div>
 <form>
   <label> Titel </label>
   <br>
-  <input ng-model="title" type="text">
+  <input ng-disabled="new==false" ng-model="title" type="text">
   <br>
   <label> Omschrijving </label>
   <br>
@@ -10,9 +15,21 @@
   <br>
   <label> Type </label>
   <br>
-  <select>
-    <option ng-model="palla" ng-repeat="type in materialTypes">
+  <select ng-disabled="new==false" ng-model="selectedType" id="selectedType" >
+    <option value="{{type}}" ng-repeat="type in materialTypes">
       {{type}}
     </option>
   </select>
-  <input id="image-file" type="file" />
+  <input ng-disabled="new==false" id="image-file" type="file" />
+
+  <div ng-show="new==true">
+    <button ng-disabled="title=='' || description=='' || selectedType==''" ng-click="upload()" class="btn btn-success">Uploaden</button>
+  </div>
+  <div ng-show="new==false">
+    <button ng-disabled="title=='' || description=='' || selectedType==''" ng-click="edit()" class="btn btn-success">Bewerken</button>
+  </div>
+</form>
+
+<div class="alert alert-success" ng-show="message">
+  {{message}}
+</div>

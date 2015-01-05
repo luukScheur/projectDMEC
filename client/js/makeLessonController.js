@@ -2,8 +2,6 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
 	var socket = {};
 	socket = io.connect('http://localhost:3000');
 
-
-
     jQuery(document).ready(function() {
         jQuery('.tabs .tab-links a').on('click', function(e)  {
             var currentAttrValue = jQuery(this).attr('href');

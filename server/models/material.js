@@ -82,6 +82,19 @@ exports.postMaterial = function (material, callback) {
         }
     });
 }
+
+exports.putMaterial = function (body, callback) {
+    'use strict';
+    Material.findByIdAndUpdate(body._id, {description : body.description}, function (err, material) {
+        if (err) {
+            console.log(err);
+            callback(response("het zoeken naar de vraag is mislukt.", {}));
+        } else {
+          callback(response("material is geupdate!", material));
+        }
+
+    });
+}
 /*
 exports.deleteVraag = function (id, callback) {
     console.log("Ik ga dus verwijderen he..");

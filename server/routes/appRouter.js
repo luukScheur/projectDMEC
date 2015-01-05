@@ -8,7 +8,7 @@ module.exports = function (express) {
 	var app = express.Router();
 	app.post('/material', materialController.postMaterial);
 	//app.delete('/material/:id', materialController.postMateriaal);
-	//app.put('/material/:id', materialController.postMateriaal);
+	app.put('/material/:id', materialController.putMaterial);
 	app.get('/material', materialController.getMaterials);
 	app.get('/material/:id', materialController.getMaterial);
 	app.get('/materialAuthor/:id', materialController.getMaterialsByAuthor);

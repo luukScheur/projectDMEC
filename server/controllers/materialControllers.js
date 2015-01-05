@@ -3,7 +3,18 @@ var material = require('../models/material.js');
 var exports = module.exports = {};
 
 exports.postMaterial = function (req, res) {
-	material.postMaterial(req.body, function(data) {
+	if(!req.body.data){
+		material.postMaterial(req.body, function(data) {
+			res.send(data);
+		});
+	} else {
+		material.postMaterial(req.body.data, function(data) {
+			res.send(data);
+		});
+	}
+};
+exports.putMaterial = function (req, res) {
+	material.putMaterial(req.body, function(data) {
 		res.send(data);
 	});
 };

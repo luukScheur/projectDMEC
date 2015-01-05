@@ -52,6 +52,10 @@ MOOCBOOKApp.config(['$routeProvider', function ($routeProvider) {
     templateUrl: './views/myAccount.html',
     controller: myAccountController
   });
+  $routeProvider.when('/user/:id', {
+    templateUrl: './views/myAccount.html',
+    controller: myAccountController
+  });
 	$routeProvider.otherwise({
 		redirectTo: "/home"
 	});

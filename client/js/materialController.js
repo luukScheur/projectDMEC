@@ -2,6 +2,19 @@ var materialController = function ($http, $scope, $routeParams, $location, $wind
 
   $scope.materialTypes = materialTypes;
   $scope.new = true;
+  $scope.userID;
+  $scope.material;
+
+  //get user iD
+  $http.get("/getUser")
+      .success(function (data) {
+          if(!data.data){ console.log('niet ingelogd!'); $window.location = '/#/home'; } else {
+          $scope.user = data.data;
+          $scope.userID = data.data._id;
+          }
+      })
+
+  // check if new or edit
   if($routeParams.id == 0) {
     $scope.selectedType = '', $scope.title ='', $scope.description = '';
     $scope.new = true;
@@ -17,12 +30,19 @@ var materialController = function ($http, $scope, $routeParams, $location, $wind
 
 
   }
+
   $scope.edit = function () {
     if($scope.description == '') {
       alert ('vul wat in..');
     } else {
       console.log('update material..');
-      $http.put('/material/' + $routeParams.id, {_id: $routeParams.id, description: $scope.description})
+      $http.put('/materialVersion/' + $routeParams.id, {
+        _id: $routeParams.id,
+        description: $scope.description,
+        title: $scope.title,
+        author: $scope.userID,
+        authorName: $scope.user.name
+        })
         .success(function (data) {
             console.log(data);
             $scope.message = 'Materiaal is succesvol bewerkt';
@@ -40,13 +60,6 @@ var materialController = function ($http, $scope, $routeParams, $location, $wind
     if(file.files.length == 0){
       alert('geen bestand geselecteerd');
     } else {
-      $http.get("/getUser")
-          .success(function (data) {
-              if(!data.data){ console.log('niet ingelogd!'); $window.location = '/#/home'; } else {
-              $scope.user = data.data;
-              $scope.userID = data.data._id;
-              }
-          })
       $scope.newMaterial = {
         title: $scope.title,
         description: $scope.description,
@@ -65,7 +78,6 @@ var materialController = function ($http, $scope, $routeParams, $location, $wind
       );
       console.log($scope.newMaterial);
       $scope.message = 'bestand is geüpload!';
-
     }
   }
 };

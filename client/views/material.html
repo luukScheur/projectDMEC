@@ -1,35 +1,45 @@
-<div ng-show="new==true">
-  <h2> nieuw materiaal </h2>
-</div>
-<div ng-show="new==false">
-  <h2> bewerk materiaal </h2>
-</div>
-<form>
-  <label> Titel </label>
-  <br>
-  <input ng-disabled="new==false" ng-model="title" type="text">
-  <br>
-  <label> Omschrijving </label>
-  <br>
-  <textarea ng-model="description"></textarea>
-  <br>
-  <label> Type </label>
-  <br>
-  <select ng-disabled="new==false" ng-model="selectedType" id="selectedType" >
-    <option value="{{type}}" ng-repeat="type in materialTypes">
-      {{type}}
-    </option>
-  </select>
-  <input ng-disabled="new==false" id="image-file" type="file" />
-
+<div class="col-md-6">
   <div ng-show="new==true">
-    <button ng-disabled="title=='' || description=='' || selectedType==''" ng-click="upload()" class="btn btn-success">Uploaden</button>
+    <h2> nieuw materiaal </h2>
   </div>
   <div ng-show="new==false">
-    <button ng-disabled="title=='' || description=='' || selectedType==''" ng-click="edit()" class="btn btn-success">Bewerken</button>
+    <h2> bewerk materiaal </h2>
   </div>
-</form>
+  <form>
+    <label> Titel </label>
+    <br>
+    <input ng-model="title" type="text">
+    <br>
+    <label> Omschrijving </label>
+    <br>
+    <textarea ng-model="description"></textarea>
+    <br>
+    <label> Type </label>
+    <br>
+    <select ng-disabled="new==false" ng-model="selectedType" id="selectedType" >
+      <option value="{{type}}" ng-repeat="type in materialTypes">
+        {{type}}
+      </option>
+    </select>
+    <input ng-disabled="new==false" id="image-file" type="file" />
 
-<div class="alert alert-success" ng-show="message">
-  {{message}}
+    <div ng-show="new==true">
+      <button ng-disabled="title=='' || description=='' || selectedType==''" ng-click="upload()" class="btn btn-success">Uploaden</button>
+    </div>
+    <div ng-show="new==false">
+      <button ng-disabled="title=='' || description=='' || selectedType==''" ng-click="edit()" class="btn btn-success">Bewerken</button>
+    </div>
+  </form>
+
+  <div class="alert alert-success" ng-show="message">
+    {{message}}
+  </div>
+</div>
+<div class="col-md-6" ng-show="new==false">
+  <h2> Oude versies </h2>
+  <div ng-repeat="version in material.oldVersions">
+    <span>{{version.title}}, {{version.description}}, {{version.publishdate}}</span>
+    <a href="#/user/{{version.author}}">door {{version.authorName}}</a>
+    <hr>
+  </div>
 </div>

@@ -13,6 +13,13 @@ exports.postMaterial = function (req, res) {
 		});
 	}
 };
+
+exports.putMaterialVersion = function (req, res) {
+	material.putMaterialVersion(req.body, function(data) {
+		res.send(data);
+	});
+};
+
 exports.putMaterial = function (req, res) {
 	material.putMaterial(req.body, function(data) {
 		res.send(data);

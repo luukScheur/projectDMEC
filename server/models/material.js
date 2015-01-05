@@ -3,6 +3,15 @@ mongoose.connect("localhost/MOOCBOOKDB");
 
 var materialTypes = ['pdf', 'image', 'youtube', 'opdracht', 'word', 'voorbeeld'];
 
+var oldVersionSchema = mongoose.Schema({
+    title : {type : String, required : true},
+    description: { type: String, required: true},
+    author: {type: String, required: true},
+    authorName: {type: String, required: true},
+    likes : {type : Number, default : 0},
+    views : {type : Number, default : 0},
+    publishdate: { type: Date, default: Date.now }
+});
 var MaterialSchema = mongoose.Schema({
     title : {type : String, required : true},
     description : {type : String, required : true},
@@ -11,7 +20,8 @@ var MaterialSchema = mongoose.Schema({
     likes : {type : Number, default : 0},
     views : {type : Number, default : 0},
     publishdate : {type : Date, default : Date.now},
-    imagesrc : {type: String}
+    imagesrc : {type: String},
+    oldVersions : {type : [oldVersionSchema]}
 }, {collection : "materials"});
 
 var Material = mongoose.model('Material', MaterialSchema);
@@ -71,6 +81,7 @@ exports.postMaterial = function (material, callback) {
     newMaterial.views = material.publishdate || 0;
     newMaterial.publishdate = material.publishdate || new Date();
     newMaterial.imagesrc = material.imagesrc;
+    newMaterial.oldVersions = material.oldVersions;
     console.log(newMaterial);
 
     newMaterial.save(function (err, material) {
@@ -82,7 +93,28 @@ exports.postMaterial = function (material, callback) {
         }
     });
 }
+exports.putMaterialVersion = function (body, callback) {
+    'use strict';
+    var newMaterialVersion = {}; //new oldVersion not working
+    newMaterialVersion.title = body.title;
+    newMaterialVersion.description = body.description;
+    newMaterialVersion.type = body.type;
+    newMaterialVersion.author = body.author;
+    newMaterialVersion.authorName = body.authorName;
+    newMaterialVersion.likes = body.likes || 0;
+    newMaterialVersion.views = body.publishdate || 0;
+    newMaterialVersion.publishdate = body.publishdate || new Date();
+    console.log(newMaterialVersion);
+    Material.findByIdAndUpdate(body._id, {$pushAll: {oldVersions:[newMaterialVersion]}}, function (err, material) {
+        if (err) {
+            console.log(err);
+            callback(response("het zoeken naar de vraag is mislukt.", {}));
+        } else {
+          callback(response("material is geupdate!", material));
+        }
 
+    });
+}
 exports.putMaterial = function (body, callback) {
     'use strict';
     Material.findByIdAndUpdate(body._id, {description : body.description}, function (err, material) {

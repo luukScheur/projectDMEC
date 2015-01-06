@@ -3,7 +3,8 @@
     <h2> nieuw materiaal </h2>
   </div>
   <div ng-show="new==false">
-    <h2> bewerk materiaal </h2>
+    <h2> Materiaal </h2>
+    <a ng-show="material.original" href="#/material/{{material.original}}"><button class="btn btn-primary">Origineel</button></a>
   </div>
   <form>
     <label> Titel </label>
@@ -35,12 +36,54 @@
     {{message}}
   </div>
 </div>
+<div class="col-md-12" ng-show="new==false">
+  <ul class="nav nav-tabs">
+    <li ng-model="materialTab" ng-click="materialTab = 'overview'" role="presentation" ng-class="{active : materialTab=='overview'}"><a>Samenvatting</a></li>
+    <li ng-model="materialTab" ng-click="materialTab = 'comments'" role="presentation" ng-class="{active : materialTab=='comments'}"><a>Reacties ({{material.comments.length}})</a></li>
+    <li ng-model="materialTab" ng-click="materialTab = 'clones'" role="presentation" ng-class="{active : materialTab=='clones'}"><a>Clones ({{materialClones.length}})</a></li>
+  </ul>
+  <div class="tabContent">
+    <div ng-show="materialTab=='overview'">
+      <h3> Samenvatting </h3>
+      <p>
+        <span>{{randomViews}} weergaven</span>
+        <br>
+        <span>{{material.likes}} likes </span>
+        <br>
+      </p>
+    </div>
 
-<div class="col-md-6" ng-show="materialClones[0]">
-  <h2> Clones </h2>
-  <div ng-repeat="version in materialClones">
-    <span>{{version.title}}, {{version.description}}, {{version.publishdate}}</span>
-    <a href="#/user/{{version.author}}">door {{version.authorName}}</a>
-    <hr>
+    <div ng-show="materialTab=='comments'">
+      <h3> Reacties </h3>
+      <div ng-show="new==false">
+        <div ng-repeat="comment in material.comments">
+          <span>{{comment.description}}. door: <a href="#/user/{{comment.author}}">{{comment.authorName}}</a></span>
+          <hr>
+        </div>
+        <span ng-hide="material.comments[0]">Nog geen reacties. </span>
+        <form>
+          <textarea ng-model="commentDescription"></textarea>
+          <button ng-disabled="commentDescription==''" ng-click="comment()" class="btn btn-success">Reageer</button>
+        </form>
+        <div class="alert alert-success" ng-show="commentMessage">
+          {{commentMessage}}
+        </div>
+      </div>
+    </div>
+
+    <div ng-show="materialTab=='clones'">
+      <h3> Clones</h3>
+      <div ng-show="materialClones[0]">
+        <div ng-repeat="version in materialClones">
+          <span><a href="#/material/{{version._id}}"><i class="fa fa-edit"></i></a>{{version.title}}, {{version.description}}, {{version.publishdate}}</span>
+          <a href="#/user/{{version.author}}">door {{version.authorName}}</a>
+          <hr>
+        </div>
+      </div>
+      <div ng-hide="materialClones[0]">
+        <span> Nog geen clones gemaakt </span>
+      </div>
+    </div>
+
   </div>
 </div>

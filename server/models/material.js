@@ -3,6 +3,14 @@ mongoose.connect("localhost/MOOCBOOKDB");
 
 var materialTypes = ['pdf', 'image', 'youtube', 'opdracht', 'word', 'voorbeeld'];
 
+var comment = mongoose.Schema({
+    description : {type : String, required : true},
+    author: {type: String, required : true},
+    authorName: {type: String, required : true},
+    likes : {type : Number, default : 0},
+    views : {type : Number, default : 0},
+    publishdate : {type : Date, default : Date.now}
+});
 var MaterialSchema = mongoose.Schema({
     title : {type : String, required : true},
     description : {type : String, required : true},
@@ -12,6 +20,7 @@ var MaterialSchema = mongoose.Schema({
     likes : {type : Number, default : 0},
     views : {type : Number, default : 0},
     publishdate : {type : Date, default : Date.now},
+    comments : {type: [comment]},
     imagesrc : {type: String},
     original : {type : String}
 }, {collection : "materials"});
@@ -32,13 +41,6 @@ exports.getMaterials = function (callback) {
             console.log(err);
             callback(response("het zoeken naar de vragen is mislukt.", {}));
         } else {
-            /* countclones not working:: scope inside scope...
-            for(var i = 0; i < materials.length; i++){
-              Material.find({'original' : materials[i]._id}, function (err, material) {
-                materials[i].countClones = material.length;//console.log(material.length);
-              });
-            }
-            */
             callback(response("het zoeken naar de vragen is gelukt.", materials));
         }
     });
@@ -91,6 +93,7 @@ exports.postMaterial = function (material, callback) {
     newMaterial.views = material.publishdate || 0;
     newMaterial.publishdate = material.publishdate || new Date();
     newMaterial.imagesrc = material.imagesrc;
+    newMaterial.comments = material.comments || [];
     newMaterial.original = material.original || null;
     console.log(newMaterial);
 
@@ -103,20 +106,18 @@ exports.postMaterial = function (material, callback) {
         }
     });
 }
-/*
-exports.putMaterialVersion = function (body, callback) {
+
+exports.putComment = function (body, callback) {
     'use strict';
-    var newMaterialVersion = {};
-    newMaterialVersion.title = body.title;
-    newMaterialVersion.description = body.description;
-    newMaterialVersion.type = body.type;
-    newMaterialVersion.author = body.author;
-    newMaterialVersion.authorName = body.authorName;
-    newMaterialVersion.likes = body.likes || 0;
-    newMaterialVersion.views = body.publishdate || 0;
-    newMaterialVersion.publishdate = body.publishdate || new Date();
-    console.log(newMaterialVersion);
-    Material.findByIdAndUpdate(body._id, {$pushAll: {oldVersions:[newMaterialVersion]}}, function (err, material) {
+    var newComment = {};
+    newComment.description = body.description;
+    newComment.author = body.author;
+    newComment.authorName = body.authorName;
+    newComment.likes = body.likes || 0;
+    newComment.views = body.publishdate || 0;
+    newComment.publishdate = body.publishdate || new Date();
+
+    Material.findByIdAndUpdate(body._id, {$pushAll: {comments:[newComment]}}, function (err, material) {
         if (err) {
             console.log(err);
             callback(response("het zoeken naar de vraag is mislukt.", {}));
@@ -126,7 +127,7 @@ exports.putMaterialVersion = function (body, callback) {
 
     });
 }
-*/
+
 exports.putMaterial = function (body, callback) {
     'use strict';
     console.log('putting material!', body);

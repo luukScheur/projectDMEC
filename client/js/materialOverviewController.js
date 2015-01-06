@@ -4,7 +4,15 @@ var materialOverviewController = function ($http, $scope, $routeParams, $locatio
 
 	$scope.material = [];
 	$scope.materialTypes = materialTypes;
-
+	//get user iD
+	$http.get("/getUser")
+			.success(function (data) {
+					if(!data.data){ console.log('niet ingelogd!'); $window.location = '/#/home'; } else {
+					$scope.user = data.data;
+					$scope.userID = data.data._id;
+					}
+			})
+			
     $http.get("/material")
         .success(function (data) {
 						for(var i = 0; i < data.data.length; i++){
@@ -12,6 +20,7 @@ var materialOverviewController = function ($http, $scope, $routeParams, $locatio
 								$scope.material.push(data.data[i]);
 							}
 						}
+						$scope.getClones();
 
         })
         .error(function (data, status) {
@@ -24,6 +33,27 @@ var materialOverviewController = function ($http, $scope, $routeParams, $locatio
 	$scope.sort = 'id';
 	$scope.sortOrder = false;
 	$scope.selectedTypes = [];
+
+	$scope.getClones = function () {
+		$scope.countClones = [];
+		for(var i = 0; i < $scope.material.length; i++){
+			$http.get("/materialClones/" + $scope.material[i]._id)
+					.success(function (data) {
+							$scope.countClones.push(data.data.length);
+							$scope.addToArray();
+					})
+					.error(function (data, status) {
+							alert("AJAX ERROR");
+							console.log("ERROR: show question controller error", status, data);
+					});
+		}
+
+	}
+	$scope.addToArray = function (interval, value) {
+		for(var i = 0; i < $scope.countClones.length; i++){
+			$scope.material[i].countClones = $scope.countClones[i];
+		}
+	}
 
 	$scope.toggleSelection = function (selectedType) {
 

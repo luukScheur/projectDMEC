@@ -1,13 +1,13 @@
 <div class="col-lg-12">
 	<h2>Homepage voor ingelogde docent:</h2>
 	<div class="col-lg-12">
-		Ingelogd als {{user.name}}. Of kies een andere gebruiker: 
+		Ingelogd als {{user.name}}. Of kies een andere gebruiker:
 		<select id="selectUser">
 			<option ng-model="username" value="{{user._id}}" ng-repeat="user in users">{{user.name}}</option>
 		</select>
 
 	</div>
-	<div class="homepageblock col-lg-4" ng-repeat="block in selectedBlocks">
+	<div draggable="true" ondragstart="drag(event)" class="homepageblock col-lg-4" ng-repeat="block in selectedBlocks">
 		<div id="block{{block.id}}" class="content">
 			<i ng-click="removeBlock('{{$index}}')" class="fa fa-remove fa-lg"></i>
 			<h3>{{block.title}}</h3>

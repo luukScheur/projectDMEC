@@ -11,6 +11,7 @@ module.exports = function (express) {
 	//app.delete('/material/:id', materialController.postMateriaal);
 	app.put('/material/:id', materialController.putMaterial);
 	//app.put('/materialVersion/:id', materialController.putMaterialVersion);
+	app.put('/materialComment/:id', materialController.putComment);
 	app.get('/materialClones/:id', materialController.getMaterialClones);
 	app.get('/material', materialController.getMaterials);
 	app.get('/material/:id', materialController.getMaterial);

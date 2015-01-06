@@ -35,9 +35,10 @@
     {{message}}
   </div>
 </div>
-<div class="col-md-6" ng-show="new==false">
-  <h2> Oude versies </h2>
-  <div ng-repeat="version in material.oldVersions">
+
+<div class="col-md-6" ng-show="materialClones[0]">
+  <h2> Clones </h2>
+  <div ng-repeat="version in materialClones">
     <span>{{version.title}}, {{version.description}}, {{version.publishdate}}</span>
     <a href="#/user/{{version.author}}">door {{version.authorName}}</a>
     <hr>

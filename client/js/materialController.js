@@ -2,8 +2,7 @@ var materialController = function ($http, $scope, $routeParams, $location, $wind
 
   $scope.materialTypes = materialTypes;
   $scope.new = true;
-  $scope.userID;
-  $scope.material;
+  $scope.userID, $scope.material, $scope.materialClones;
 
   //get user iD
   $http.get("/getUser")
@@ -27,6 +26,10 @@ var materialController = function ($http, $scope, $routeParams, $location, $wind
             $scope.description = $scope.material.description;
             $scope.selectedType = $scope.material.type;
         })
+    $http.get("/materialClones/" + $routeParams.id)
+        .success(function (data) {
+            $scope.materialClones = data.data;
+        })
 
 
   }
@@ -36,48 +39,59 @@ var materialController = function ($http, $scope, $routeParams, $location, $wind
       alert ('vul wat in..');
     } else {
       console.log('update material..');
-      $http.put('/materialVersion/' + $routeParams.id, {
-        _id: $routeParams.id,
-        description: $scope.description,
+      //check if author publishes his own material
+      if($scope.material.author == $scope.userID) {
+        $http.put('/material/' + $scope.material._id, {
+          _id: $scope.material._id,
+          description: $scope.description,
+          title: $scope.title
+          })
+          .success(function (data) {
+              console.log(data);
+              $scope.message = 'Materiaal is succesvol bewerkt';
+          })
+          .error(function (data, status) {
+              console.log("ERROR: show question controller error", status, data);
+          });
+
+      } else {
+        $http.post('/material', {
+          description: $scope.description,
+          title: $scope.title,
+          original: $scope.material._id,
+          type: $scope.material.type,
+          author: $scope.userID,
+          authorName: $scope.user.name
+          })
+          .success(function (data) {
+              console.log(data);
+              $scope.message = 'Materiaal is succesvol gecloned';
+          })
+          .error(function (data, status) {
+              console.log("ERROR: show question controller error", status, data);
+          });
+      }
+    }
+  }
+  $scope.upload = function () {
+    var file = document.getElementById('image-file');
+    if(file.files.length == 0){
+      alert('geen bestand geselecteerd');
+    } else {
+      $http.post('/material', {
         title: $scope.title,
+        description: $scope.description,
+        type: document.getElementById('selectedType').value,
         author: $scope.userID,
         authorName: $scope.user.name
         })
         .success(function (data) {
             console.log(data);
-            $scope.message = 'Materiaal is succesvol bewerkt';
+            $scope.message = 'bestand is geüpload!';
         })
         .error(function (data, status) {
             console.log("ERROR: show question controller error", status, data);
-        }
-      );
-    }
-  }
-  $scope.upload = function () {
-    console.log($scope.selectedType);
-    var file = document.getElementById('image-file');
-    console.log();
-    if(file.files.length == 0){
-      alert('geen bestand geselecteerd');
-    } else {
-      $scope.newMaterial = {
-        title: $scope.title,
-        description: $scope.description,
-        type: document.getElementById('selectedType').value,
-        author: $scope.userID,
-        likes: 0,
-        views: 0
-      };
-      $http.post('/material', {data: $scope.newMaterial})
-        .success(function (data) {
-            console.log(data);
-        })
-        .error(function (data, status) {
-            console.log("ERROR: show question controller error", status, data);
-        }
-      );
-      console.log($scope.newMaterial);
-      $scope.message = 'bestand is geüpload!';
+        });
     }
   }
 };

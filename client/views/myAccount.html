@@ -43,7 +43,7 @@
       <div ng-repeat="material in myMaterial" class="col-lg-12">
         <h4>{{material.title}}</h4>
         <span>Type: {{material.type}}, likes: {{material.likes}}, views: {{material.views}}</span>
-        <span>door: {{material.author}}</span>
+        <span>beschrijving: {{material.description}}</span>
       </div>
     </div>
     <div ng-show="tab=='comment'">
@@ -51,6 +51,11 @@
     </div>
     <div ng-show="tab=='contribution'">
       <h2>Bijdrage</h2>
+      <div ng-repeat="material in myContributions" class="col-lg-12">
+        <h4>{{material.title}}<span> (<a href="#/material/{{material.original}}">origineel</a>)</span></h4>
+        <span>likes: {{material.likes}}, views: {{material.views}}.</span>
+        <span>Omschrijving: {{material.description}}</span>
+      </div>
     </div>
 
   </div>

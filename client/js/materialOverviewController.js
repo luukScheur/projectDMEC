@@ -2,14 +2,17 @@ var materialOverviewController = function ($http, $scope, $routeParams, $locatio
 	var socket = {};
 	socket = io.connect('http://localhost:3000');
 
-	$scope.material = material;
+	$scope.material = [];
 	$scope.materialTypes = materialTypes;
-	console.log($scope.material);
 
     $http.get("/material")
         .success(function (data) {
-            console.log(data);
-						$scope.material = data.data;
+						for(var i = 0; i < data.data.length; i++){
+							if(data.data[i].original==null){
+								$scope.material.push(data.data[i]);
+							}
+						}
+
         })
         .error(function (data, status) {
             alert("AJAX ERROR");

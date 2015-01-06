@@ -9,7 +9,8 @@ module.exports = function (express) {
 	app.post('/material', materialController.postMaterial);
 	//app.delete('/material/:id', materialController.postMateriaal);
 	app.put('/material/:id', materialController.putMaterial);
-	app.put('/materialVersion/:id', materialController.putMaterialVersion);
+	//app.put('/materialVersion/:id', materialController.putMaterialVersion);
+	app.get('/materialClones/:id', materialController.getMaterialClones);
 	app.get('/material', materialController.getMaterials);
 	app.get('/material/:id', materialController.getMaterial);
 	app.get('/materialAuthor/:id', materialController.getMaterialsByAuthor);

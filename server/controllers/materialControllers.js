@@ -13,14 +13,21 @@ exports.postMaterial = function (req, res) {
 		});
 	}
 };
-
+/*
 exports.putMaterialVersion = function (req, res) {
 	material.putMaterialVersion(req.body, function(data) {
 		res.send(data);
 	});
 };
+*/
+exports.getMaterialClones = function (req, res) {
+	material.getMaterialClones(req.params.id, function(data) {
+		res.send(data);
+	});
+};
 
 exports.putMaterial = function (req, res) {
+	console.log('backend gotten', req.body);
 	material.putMaterial(req.body, function(data) {
 		res.send(data);
 	});

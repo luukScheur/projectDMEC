@@ -7,7 +7,8 @@ var UserSchema = mongoose.Schema({
     profilePicture : {type: String},
     blocks : {type : [] },
     school : {type : String },
-    registerDate : {type : Date, default : Date.now}
+    registerDate : {type : Date, default : Date.now},
+    favorites : {type : []}
 }, {collection : "users"});
 
 var User = mongoose.model('User', UserSchema);
@@ -54,6 +55,7 @@ exports.postUser = function (user, callback) {
     newUser.blocks = user.blocks || [0,1,2,3,4,5];
     newUser.school = user.school || null;
     newUser.registerDate = user.registerDate || new Date();
+    newUser.favorites = user.favorites || ["none"];
     console.log(newUser);
 
     newUser.save(function (err, user) {
@@ -75,5 +77,19 @@ exports.putUserBlock = function (body, callback) {
             return;
         }
         callback(response("blocks zijn geupdate!", user));
+    });
+}
+
+exports.putUser = function (body, callback) {
+    'use strict';
+    console.log('putting user!', body);
+    User.findByIdAndUpdate(body._id, {favorites : body.favorites}, function (err, material) {
+        if (err) {
+            console.log(err);
+            callback(response("het zoeken naar de vraag is mislukt.", {}));
+        } else {
+            callback(response("user is geupdate!", material));
+        }
+
     });
 }

@@ -2,7 +2,18 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
 	var socket = {};
 	socket = io.connect('http://localhost:3000');
 
+    //get user iD
+    $http.get("/getUser")
+        .success(function (data) {
+            if(!data.data){ console.log('niet ingelogd!'); $window.location = '/#/home'; } else {
+                $scope.user = data.data;
+                console.log("user: ", $scope.user);
+                $scope.userID = data.data._id;
+            }
+        });
+
     $scope.lessonMaterials = [{materialId: "none", type: "none"}];
+    $scope.materialTypes = materialTypes;
 
     jQuery(document).ready(function() {
         jQuery('.tabs .tab-links a').on('click', function(e)  {
@@ -42,6 +53,21 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
 //
 //            }
 //        }
+    };
+
+    $scope.addFavorite = function(materialId) {
+        $scope.user.favorites.push(materialId);
+
+        $http({method: 'PUT', url: '/user/' + $scope.userID, data: $scope.user}).
+            success(function (data) {
+                console.log("Added favorite: ", data);
+                //$location.path("");
+            })
+            .error(function (data, status) {
+                alert("AJAX ERROR");
+                console.log("ERROR: question controller error", status, data);
+            });
+
     };
 
     $("#saveLesson").on('click', function () {

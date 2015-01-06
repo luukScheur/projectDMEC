@@ -28,6 +28,7 @@ module.exports = function (express) {
 	app.post('/user', userController.postUser);
 	app.get('/user', userController.getUsers);
 	app.put('/userblock/:id', userController.putUserBlock);
+    app.put('/user/:id', userController.putUser);
 	app.get('/user/:id', userController.getUser);
 
 	app.get('/getUser', userController.getLoginUser);

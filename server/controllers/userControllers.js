@@ -23,6 +23,12 @@ exports.putUserBlock = function (req, res) {
     res.send(data);
   });
 };
+exports.putUser = function (req, res) {
+    user.putUser(req.body, function(data) {
+        res.send(data);
+    });
+};
+
 
 exports.loginUser = function (req, res) {
   loggedinID = req.params.id;

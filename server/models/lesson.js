@@ -7,8 +7,8 @@ var LessonSchema = mongoose.Schema({
     likes : {type : Number, default : 0},
     views : {type : Number, default : 0},
     publishdate : {type : Date, default : Date.now},
-    videoUrl : {type: String},
-    tags : {type: []}
+    tags : {type: []},
+    material : {material: []}
 }, {collection : "lessons"});
 
 var Lesson = mongoose.model('Lesson', LessonSchema);
@@ -54,7 +54,7 @@ exports.postLesson = function (lesson, callback) {
     newLesson.views = lesson.publishdate || 0;
     newLesson.publishdate = lesson.publishdate || new Date();
     newLesson.tags = lesson.tags;
-    newLesson.material = lesson.materials;
+    newLesson.material = lesson.material;
     console.log(newLesson);
 
     newLesson.save(function (err, lesson) {

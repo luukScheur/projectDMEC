@@ -2,6 +2,7 @@
 var materialController = require('../controllers/materialControllers.js');
 var videoController = require('../controllers/videoControllers.js');
 var userController = require('../controllers/userControllers.js');
+var lessonController = require ('../controllers/lessonControllers.js');
 
 // De routes die worden gebruikt door iedereen.
 module.exports = function (express) {

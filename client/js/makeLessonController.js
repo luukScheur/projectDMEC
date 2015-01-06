@@ -42,10 +42,36 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
 //
 //            }
 //        }
-
-
-
     };
+
+    $("#saveLesson").on('click', function () {
+       console.log("save");
+        var materialArray = [];
+        for (var i = 0; i < $scope.lessonMaterials.length; i++) {
+            materialArray[i] = $scope.lessonMaterials[i].materialId
+        }
+        console.log(materialArray);
+
+        var newLesson = {
+            title: $('#title').val(),
+            description: $('#description').val(),
+            material: materialArray
+        };
+        console.log(newLesson);
+
+        $http({method: 'POST', url: '/lesson', data: newLesson}).
+            success(function (data) {
+                console.log("Added lesson: ", data);
+                //$location.path("");
+            })
+            .error(function (data, status) {
+                alert("AJAX ERROR");
+                console.log("ERROR: question controller error", status, data);
+            });
+
+    });
+
+
 
     //Filters
     $scope.search = '';

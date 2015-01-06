@@ -1,6 +1,26 @@
 <div class="col-lg-3">
 <h2> Filters</h2>
-
+    <br>
+    <span>Sorteren op</span>
+    <br>
+    <select ng-model="sort">
+        <option value='views'>Views</option>
+        <option value='likes'>Likes</option>
+        <option value='publishdate'>Datum</option>
+    </select>
+    <select ng-model="sortOrder">
+        <option value="true">Aflopend</option>
+        <option value="false">Oplopend</option>
+    </select>
+    <br><br>
+    <span>Soort materiaal</span>
+    <br>
+    <div id="materialTypesFilter" ng-repeat="type in materialTypes" ng-click="toggleSelection(type)">
+        <input type="checkbox"
+               ng-checked="selectedTypes.indexOf('{{type}}') > -1"
+               ng-value="type">
+        {{type}}
+    </div>
 
 </div>
 
@@ -16,7 +36,7 @@
         <div class="tab-content">
             <div id="tab1" class="tab active">
                 <div ng-click = "addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
-                    <h4>{{item.title}}</h4>
+                    <h4>{{item.title}}</h4><i ng-click = "addFavorite(item._id)" class="fa fa-star-o"></i>
                     <p> {{item.type}} </p>
                     <span>Door: {{item.author}}</span>
                     </div>

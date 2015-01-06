@@ -15,7 +15,7 @@
 
         <div class="tab-content">
             <div id="tab1" class="tab active">
-                <div class="col-lg-3 {{item.type}} .block" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
+                <div ng-click = "addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
                     <h4>{{item.title}}</h4>
                     <p> {{item.type}} </p>
                     <span>Door: {{item.author}}</span>
@@ -40,6 +40,11 @@
             </div>
 
         </div>
+    </div>
+
+
+    <div class="col-lg-2 {{material.type}} .block" ng-repeat="material in lessonMaterials">
+        </br> </br>
     </div>
 
 </div>

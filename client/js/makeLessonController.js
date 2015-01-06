@@ -2,6 +2,8 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
 	var socket = {};
 	socket = io.connect('http://localhost:3000');
 
+    $scope.lessonMaterials = [{materialId: "none", type: "none"}];
+
     jQuery(document).ready(function() {
         jQuery('.tabs .tab-links a').on('click', function(e)  {
             var currentAttrValue = jQuery(this).attr('href');
@@ -16,17 +18,6 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
         });
     });
 
-   $http.get("material")
-        .success(function (data) {
-            console.log(data);
-			$scope.video = data.data;
-            $scope.selectedVideo = data.data;
-        })
-        .error(function (data, status) {
-            alert("AJAX ERROR");
-            console.log("ERROR: show question controller error", status, data);
-        });
-
     $http.get("/material")
         .success(function (data) {
             console.log(data);
@@ -36,6 +27,25 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
             alert("AJAX ERROR");
             console.log("ERROR: show question controller error", status, data);
         });
+
+    $scope.addMaterialToLesson = function(id, type) {
+        console.log(id, type);
+        if ($scope.lessonMaterials[0].materialId === "none") {
+            $scope.lessonMaterials.splice(0,1);
+        }
+        $scope.lessonMaterials.push({materialId: id, type: type});
+
+//        for (var j = 0; j < $scope.material.length; j++) {
+//            console.log ($scope.material[j]._id);
+//            if ($scope.material[j]._id === id) {
+//                $scope.material.splice(j,1);
+//
+//            }
+//        }
+
+
+
+    };
 
     //Filters
     $scope.search = '';

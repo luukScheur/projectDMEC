@@ -2,6 +2,7 @@
 var materialController = require('../controllers/materialControllers.js');
 var videoController = require('../controllers/videoControllers.js');
 var userController = require('../controllers/userControllers.js');
+var lessonController = require ('../controllers/lessonControllers.js');
 
 // De routes die worden gebruikt door iedereen.
 module.exports = function (express) {
@@ -18,6 +19,10 @@ module.exports = function (express) {
 	app.post('/video', videoController.postVideo);
 	app.get('/video', videoController.getVideos);
 	app.get('/video/:id', videoController.getVideo);
+
+    app.post('/lesson', lessonController.postLesson);
+    app.get('/lesson', lessonController.getLessons);
+    app.get('/lesson/:id', lessonController.getLesson);
 
 	app.post('/user', userController.postUser);
 	app.get('/user', userController.getUsers);

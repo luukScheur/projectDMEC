@@ -94,10 +94,8 @@
  *	makeLesson
  * -------------------------------------------------------------------- */
 .block{
-    float: left;
     height: 300px;
-    display: block;
-    overflow: hidden;
+    display: inline;
 }
 
 .pdf{
@@ -110,6 +108,10 @@
 
 .image{
     background-color: #999999;
+}
+
+.none{
+    background-color: #262626;
 }
 
 /*----- Tabs -----*/

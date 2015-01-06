@@ -15,7 +15,7 @@
 
         <div class="tab-content">
             <div id="tab1" class="tab active">
-                <div class="col-lg-3 {{item.type}} .block" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
+                <div ng-click = "addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
                     <h4>{{item.title}}</h4>
                     <p> {{item.type}} </p>
                     <span>Door: {{item.author}}</span>
@@ -40,8 +40,43 @@
             </div>
 
         </div>
+    <div class="col-lg-2 {{material.type}} .block" ng-repeat="material in lessonMaterials">
+        </br> </br>
     </div>
+    <div>
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            Klaar!
+        </button>
 
-</div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Gegevens</h4>
+                    </div>
+                    <form role="form"><div class="modal-body">
+                        Voor u de les kan opslaan, hebben we nog een titel en omschrijving nodig.
+
+                            <div class="form-group">
+                                <label for="title">Titel</label>
+                                <input type="text" class="form-control" id="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Omschrijving</label>
+                                <textarea class="form-control" id="description"></textarea>
+                            </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuleren</button>
+                        <button id="saveLesson" type="submit" class="btn btn-primary" data-dismiss="modal">Opslaan</button>
+                    </div></form>
+                </div>
             </div>
+        </div>
+
+    </div>
 </div>
+

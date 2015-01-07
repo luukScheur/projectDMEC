@@ -14,6 +14,7 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
 
     $scope.lessonMaterials = [{materialId: "none", type: "none"}];
     $scope.materialTypes = materialTypes;
+    $scope.favoriteMaterial = [];
 
     jQuery(document).ready(function() {
         jQuery('.tabs .tab-links a').on('click', function(e)  {
@@ -33,12 +34,61 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
         .success(function (data) {
             console.log(data);
             $scope.material = data.data;
+            console.log("scope material", $scope.material);
+            for (var i = 0; i < $scope.material.length; i ++) {
+                $scope.material[i].favoriteIcon = "fa fa-star-o";
+                for (var j = 0; j < $scope.user.favorites.length; j ++) {
+                    if ($scope.material[i]._id === $scope.user.favorites[j]) {
+                        console.log("match");
+                        $scope.material[i].favoriteIcon = "fa fa-star";
+                        $scope.favoriteMaterial.push($scope.material[i]);
+                        console.log($scope.favoriteMaterial);
+                    }
+                }
+            }
+            $scope.showMaterial = $scope.material;
+
         })
         .error(function (data, status) {
             alert("AJAX ERROR");
             console.log("ERROR: show question controller error", status, data);
         });
 
+    $scope.showFavorite = function () {
+        $scope.showMaterial = $scope.favoriteMaterial;
+    };
+
+    $scope.addMaterialLeft = function (id) {
+        var oldValue;
+        console.log("to the left... to the left!");
+        for (var i = 0; i < $scope.lessonMaterials.length; i ++) {
+            console.log($scope.lessonMaterials[i].materialId + "  " + id);
+            if ($scope.lessonMaterials[i].materialId === id) {
+                console.log("Oud: ", $scope.lessonMaterials);
+                oldValue = $scope.lessonMaterials[i - 1];
+                $scope.lessonMaterials[i - 1] = $scope.lessonMaterials[i];
+                $scope.lessonMaterials[i] = oldValue;
+                console.log("Nieuw: ", $scope.lessonMaterials);
+
+            }
+        }
+    };
+
+    $scope.addMaterialRight = function (id) {
+        var oldValue;
+        console.log("to the right... to the right!");
+        for (var j = 0; j < $scope.lessonMaterials.length; j ++) {
+            console.log($scope.lessonMaterials[j].materialId + "  " + id);
+            if ($scope.lessonMaterials[j].materialId === id) {
+                console.log("Oud: ", $scope.lessonMaterials);
+                oldValue = $scope.lessonMaterials[j + 1];
+                $scope.lessonMaterials[j + 1] = $scope.lessonMaterials[j];
+                $scope.lessonMaterials[j] = oldValue;
+                console.log("Nieuw: ", $scope.lessonMaterials);
+
+            }
+        }
+    };
     $scope.addMaterialToLesson = function(id, type) {
         console.log(id, type);
         if ($scope.lessonMaterials[0].materialId === "none") {
@@ -53,6 +103,23 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
 //
 //            }
 //        }
+    };
+
+    $scope.toggleFavorite = function (materialId) {
+        for (var i = 0; i < $scope.material.length; i ++) {
+            if ($scope.material[i]._id === materialId) {
+                if ($scope.material[i].favoriteIcon === "fa fa-star"){
+                    $scope.removeFavorite(materialId);
+                    console.log("remove favorite");
+                    $scope.material[i].favoriteIcon = "fa fa-star-o";
+                } else if ($scope.material[i].favoriteIcon === "fa fa-star-o"){
+                    $scope.addFavorite(materialId);
+                    console.log("add favorite");
+                    $scope.material[i].favoriteIcon = "fa fa-star";
+                }
+            }
+        }
+
     };
 
     $scope.addFavorite = function(materialId) {
@@ -70,8 +137,29 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
 
     };
 
+    $scope.removeFavorite = function(materialId) {
+        for (var i = 0; i < $scope.user.favorites.length; i ++){
+            if( $scope.user.favorites[i] === materialId){
+                $scope.user.favorites.splice(i,1);
+            }
+        }
+
+        $http({method: 'PUT', url: '/user/' + $scope.userID, data: $scope.user}).
+            success(function (data) {
+                console.log("Deleted favorite: ", data);
+                //$location.path("");
+            })
+            .error(function (data, status) {
+                alert("AJAX ERROR");
+                console.log("ERROR: question controller error", status, data);
+            });
+
+    };
+
+
+
     $("#saveLesson").on('click', function () {
-       console.log("save");
+        console.log("save");
         var materialArray = [];
         for (var i = 0; i < $scope.lessonMaterials.length; i++) {
             materialArray[i] = $scope.lessonMaterials[i].materialId

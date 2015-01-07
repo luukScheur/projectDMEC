@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 mongoose.connect("localhost/MOOCBOOKDB");
 
-var materialTypes = ['pdf', 'image', 'youtube', 'opdracht', 'word', 'voorbeeld'];
+var materialTypes = ['pdf', 'image', 'youtube', 'opdracht', 'word', 'excel', 'powerpoint'];
 
 var comment = mongoose.Schema({
     description : {type : String, required : true},
@@ -20,6 +20,7 @@ var MaterialSchema = mongoose.Schema({
     likes : {type : Number, default : 0},
     views : {type : Number, default : 0},
     publishdate : {type : Date, default : Date.now},
+    modifieddate : {type : Date, default : null},
     comments : {type: [comment]},
     imagesrc : {type: String},
     original : {type : String}
@@ -34,17 +35,63 @@ var response = function (message, data) {
         data : data
     }
 }
+
+/*
 exports.getMaterials = function (callback) {
     'use strict';
-    Material.find(function (err, materials) {
+    var getMaterials = function () {
+      Material.find(function (err, materials) {
+        if(err){console.log(err); callback(response('error', err));} else {
+            checkMaterials(materials);
+        }
+      });
+    }
+    getMaterials();
+    var checkMaterials = function (materialList) {
+      var filteredMaterials = [];
+      var checkMaterial = function (nummer) {
+
+        Material.find({'original' : materialList[nummer]._id}, function (err, material) {
+            if (err) {
+              console.log(err);
+              callback(response('erroorrr', err));
+            } else {
+
+              var mat = {
+                material : materialList[nummer],
+                countOriginal : material.length
+              }
+              filteredMaterials.push(mat);
+
+              if (nummer == materialList.length - 1) {
+                callback(response("het zoeken naar de vragen is gelukt.", filteredMaterials));
+              }
+            }
+        });
+      }
+
+      var loop = function () {
+        var i;
+        for (i = 0; i < materialList.length; i += 1) {
+          checkMaterial(i);
+        }
+      }
+      loop();
+    }
+}
+*/
+
+exports.getMaterials = function (callback) {
+    Material.find(function (err, material) {
         if (err) {
             console.log(err);
-            callback(response("het zoeken naar de vragen is mislukt.", {}));
-        } else {
-            callback(response("het zoeken naar de vragen is gelukt.", materials));
+            callback(response("het zoeken naar de vraag is mislukt.", {}));
+            return;
         }
+        callback(response("het zoeken naar de vraag is gelukt.", material));
     });
 }
+
 exports.getMaterialClones = function (id, callback) {
     Material.find({'original' : id}, function (err, material) {
         if (err) {
@@ -92,6 +139,7 @@ exports.postMaterial = function (material, callback) {
     newMaterial.likes = material.likes || 0;
     newMaterial.views = material.publishdate || 0;
     newMaterial.publishdate = material.publishdate || new Date();
+    newMaterial.modifieddate = material.modifieddate || null;
     newMaterial.imagesrc = material.imagesrc;
     newMaterial.comments = material.comments || [];
     newMaterial.original = material.original || null;
@@ -131,7 +179,7 @@ exports.putComment = function (body, callback) {
 exports.putMaterial = function (body, callback) {
     'use strict';
     console.log('putting material!', body);
-    Material.findByIdAndUpdate(body._id, {description : body.description,title : body.title}, function (err, material) {
+    Material.findByIdAndUpdate(body._id, {description : body.description,title : body.title, modifieddate: new Date()}, function (err, material) {
         if (err) {
             console.log(err);
             callback(response("het zoeken naar de vraag is mislukt.", {}));

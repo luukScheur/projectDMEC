@@ -4,7 +4,8 @@ var materialController = function ($http, $scope, $routeParams, $location, $wind
   $scope.new = true;
   $scope.materialTab = 'overview';
   $scope.userID, $scope.material, $scope.materialClones;
-  $scope.randomViews = Math.random()*100;
+  $scope.randomViews = Math.floor(Math.random()*100);
+  $scope.randomLikes = Math.floor(Math.random()*10);
 
   //get user iD
   $http.get("/getUser")

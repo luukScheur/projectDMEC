@@ -12,19 +12,20 @@ var materialOverviewController = function ($http, $scope, $routeParams, $locatio
 					$scope.userID = data.data._id;
 					}
 			})
-			
+
     $http.get("/material")
         .success(function (data) {
+						console.log('materialenOntvangen', data.data);
+
 						for(var i = 0; i < data.data.length; i++){
 							if(data.data[i].original==null){
 								$scope.material.push(data.data[i]);
 							}
 						}
 						$scope.getClones();
-
         })
         .error(function (data, status) {
-            alert("AJAX ERROR");
+            //alert("AJAX ERROR");
             console.log("ERROR: show question controller error", status, data);
         });
 
@@ -43,7 +44,7 @@ var materialOverviewController = function ($http, $scope, $routeParams, $locatio
 							$scope.addToArray();
 					})
 					.error(function (data, status) {
-							alert("AJAX ERROR");
+							//alert("AJAX ERROR");
 							console.log("ERROR: show question controller error", status, data);
 					});
 		}

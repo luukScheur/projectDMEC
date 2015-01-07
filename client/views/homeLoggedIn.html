@@ -3,24 +3,183 @@
 	<div class="col-lg-12">
 		Ingelogd als {{user.name}}. Of kies een andere gebruiker:
 		<select id="selectUser">
+			<option disabled selected>selecteer een gebruiker</option>
 			<option ng-model="username" value="{{user._id}}" ng-repeat="user in users">{{user.name}}</option>
 		</select>
 
 	</div>
-	<div draggable="true" ondragstart="drag(event)" class="homepageblock col-lg-4" ng-repeat="block in selectedBlocks">
-		<div id="block{{block.id}}" class="content">
-			<i ng-click="removeBlock('{{$index}}')" class="fa fa-remove fa-lg"></i>
-			<h3>{{block.title}}</h3>
-			<hr>
-			{{block.description}}
+	<div class="homepageblock col-lg-4" ng-repeat="block in selectedBlocks">
+		<div id="block{{block}}" class="content">
+			<i ng-click="removeBlock($index)" class="fa fa-remove fa-lg"></i>
+			<div ng-show="{{block}} == 0">
+				<h3> Gewijzigd materiaal </h3>
+				<div ng-repeat="material in materialByModifiedDate | limitTo:3">
+					<hr>
+					<div class="col-md-2">
+						<a href="#/material/{{material._id}}"
+							<i 	class="fa fa-lg"
+									ng-class="{
+												'fa-file-pdf-o': material.type=='pdf',
+												'fa-file-word-o' : material.type=='word',
+												'fa-youtube' : material.type=='youtube',
+												'fa-file-image-o' : material.type=='image',
+												'fa-file-powerpoint-o' : material.type=='powerpoint',
+												'fa-file-excel-o' : material.type=='excel',
+												'fa-tasks' : material.type=='opdracht'
+											}"></i>
+						</a>
+					</div>
+					<div class="col-md-10">
+						<label>{{material.title}}</label>
+						<span>{{material.description}}</span>
+					</div>
+				</div>
+				<hr>
+			</div>
+			<div ng-show="{{block}} == 1">
+				<h3> Nieuw materiaal </h3>
+				<div ng-repeat="material in materialByDate | limitTo:3">
+					<hr>
+					<div class="col-md-2">
+						<a href="#/material/{{material._id}}"
+							<i 	class="fa fa-lg"
+									ng-class="{
+												'fa-file-pdf-o': material.type=='pdf',
+												'fa-file-word-o' : material.type=='word',
+												'fa-youtube' : material.type=='youtube',
+												'fa-file-image-o' : material.type=='image',
+												'fa-file-powerpoint-o' : material.type=='powerpoint',
+												'fa-file-excel-o' : material.type=='excel',
+												'fa-tasks' : material.type=='opdracht'
+											}"></i>
+						</a>
+					</div>
+					<div class="col-md-10">
+						<label>{{material.title}}</label>
+						<span>{{material.description}}</span>
+					</div>
+				</div>
+				<hr>
+			</div>
+			<div ng-show="{{block}} == 2">
+				<h3> Meest bekeken les </h3>
+				<!-- Random lessen showen -->
+			</div>
+			<div ng-show="{{block}} == 3">
+				<h3> Nieuws </h3>
+				<hr>
+				<span> Nieuwtje 1 </span>
+				<hr>
+				<span> Nieuwtje 2 </span>
+				<hr>
+				<span> Nieuwtje 3 </span>
+			</div>
+			<div ng-show="{{block}} == 4">
+				<h3> Wat wordt er nu bekeken? </h3>
+				<!-- Random lessen showen -->
+			</div>
+			<div ng-show="{{block}} == 5">
+				<h3> Tagscloud </h3>
+				<!-- Michael get here some random tags dan -->
+			</div>
+			<div ng-show="{{block}} == 6">
+				<h3> Algemene discussie </h3>
+				<div ng-repeat="comment in materialRandomComment | limitTo:3">
+					<span>"{{comment.description}}" door: {{comment.authorName}}</span>
+				</div>
+			</div>
+			<div ng-show="{{block}} == 7">
+				<h3> Gevolgde discussie </h3>
+				<div ng-repeat="comment in materialWithMyComment | limitTo:3">
+					<span>"{{comment.description}}" door: {{comment.authorName}}</span>
+				</div>
+			</div>
+			<div ng-show="{{block}} == 8">
+				<h3> Meest bekeken materiaal </h3>
+				<div ng-repeat="material in materialRandom | limitTo:3">
+					<hr>
+					<div class="col-md-2">
+						<a href="#/material/{{material._id}}"
+							<i 	class="fa fa-lg"
+									ng-class="{
+												'fa-file-pdf-o': material.type=='pdf',
+												'fa-file-word-o' : material.type=='word',
+												'fa-youtube' : material.type=='youtube',
+												'fa-file-image-o' : material.type=='image',
+												'fa-file-powerpoint-o' : material.type=='powerpoint',
+												'fa-file-excel-o' : material.type=='excel',
+												'fa-tasks' : material.type=='opdracht'
+											}"></i>
+						</a>
+					</div>
+					<div class="col-md-10">
+						<label>{{material.title}}</label>
+						<span>{{material.description}}</span>
+					</div>
+				</div>
+				<hr>
+			</div>
+			<div ng-show="{{block}} == 9">
+				<h3> Nieuwe lessen </h3>
+				<!-- lessen sorteren op datum -->
+			</div>
 		</div>
 	</div>
 
 	<div id="blockfooter" class="homepageblockfooter col-lg-12">
-		<i class="fa fa-chevron-circle-right fa-lg"></i>
-		<button ng-click="addBlock(block.id)" class="btn" ng-repeat="block in otherBlocks()">
-			<i class="fa fa-plus"></i> {{block.title}}
-		</button>
+		<div ng-repeat="block in blocksLeft">
+			<div class="addBlockButton" ng-show="{{block}} == 0">
+				<button ng-click="addBlock(block)" class="btn">
+					<i class="fa fa-plus"></i> Gewijzigd materiaal
+				</button>
+			</div>
+			<div class="addBlockButton" ng-show="{{block}} == 1">
+				<button ng-click="addBlock(block)" class="btn">
+					<i class="fa fa-plus"></i> Nieuw materiaal
+				</button>
+			</div>
+			<div class="addBlockButton" ng-show="{{block}} == 2">
+				<button ng-click="addBlock(block)" class="btn">
+					<i class="fa fa-plus"></i> Meest bekeken les
+				</button>
+			</div>
+			<div class="addBlockButton" ng-show="{{block}} == 3">
+				<button ng-click="addBlock(block)" class="btn">
+					<i class="fa fa-plus"></i> Nieuws
+				</button>
+			</div>
+			<div class="addBlockButton" ng-show="{{block}} == 4">
+				<button ng-click="addBlock(block)" class="btn">
+					<i class="fa fa-plus"></i> Wat wordt er nu bekeken?
+				</button>
+			</div>
+			<div class="addBlockButton" ng-show="{{block}} == 5">
+				<button ng-click="addBlock(block)" class="btn">
+					<i class="fa fa-plus"></i> Tagscloud
+				</button>
+			</div>
+			<div class="addBlockButton" ng-show="{{block}} == 6">
+				<button ng-click="addBlock(block)" class="btn">
+					<i class="fa fa-plus"></i> Algemene discussie
+				</button>
+			</div>
+			<div class="addBlockButton" ng-show="{{block}} == 7">
+				<button ng-click="addBlock(block)" class="btn">
+					<i class="fa fa-plus"></i> Gevolgde discussie
+				</button>
+			</div>
+			<div class="addBlockButton" ng-show="{{block}} == 8">
+				<button ng-click="addBlock(block)" class="btn">
+					<i class="fa fa-plus"></i> Meest bekeken materiaal
+				</button>
+			</div>
+			<div class="addBlockButton" ng-show="{{block}} == 9">
+				<button ng-click="addBlock(block)" class="btn">
+					<i class="fa fa-plus"></i> Nieuwe lessen
+				</button>
+			</div>
+		</div>
+
 	</div>
 
 </div>

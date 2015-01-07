@@ -1,5 +1,5 @@
 
-var materialTypes = ['pdf', 'image', 'youtube', 'opdracht', 'word', 'voorbeeld'];
+var materialTypes = ['pdf', 'image', 'youtube', 'opdracht', 'word', 'excel', 'powerpoint'];
 
 // publishdate format: mm/dd/yyyy
 var material = [

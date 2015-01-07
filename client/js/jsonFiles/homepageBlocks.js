@@ -2,7 +2,7 @@ var homepageBlocks = [
 	{
 		id: 0,
 		title: 'Gewijzigd materiaal',
-		description: 'en hier de tekst '
+		description: '<div ng-repeat="material in materialByDate"><span>hallo</span></div>'
 	},
 	{
 		id: 1,

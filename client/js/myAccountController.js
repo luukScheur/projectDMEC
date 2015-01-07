@@ -5,7 +5,9 @@ var myAccountController = function ($http, $scope, $routeParams, $location, $win
   $scope.user;
   $scope.myMaterial = [];
   $scope.myContributions = [];
+  $scope.myMaterialComments = [];
   $scope.viewUser = false;
+  $scope.commentTab = 'material';
 
   if($routeParams.id == null) {
     // my Account!
@@ -49,7 +51,7 @@ var myAccountController = function ($http, $scope, $routeParams, $location, $win
         .error(function (data, status) {
             console.log("ERROR: show question controller error", status, data);
         })
-        
+
     // Mijn Bijdrage
     $http.get("/material")
         .success(function (data) {
@@ -58,7 +60,16 @@ var myAccountController = function ($http, $scope, $routeParams, $location, $win
                 if($scope.allMaterial[i].author == $scope.user._id && $scope.allMaterial[i].original !== null){
                   $scope.myContributions.push($scope.allMaterial[i]);
                 }
+                for(var j = 0; j < $scope.allMaterial[i].comments.length; j++) {
+                  if($scope.allMaterial[i].comments[j].author == $scope.user._id){
+                    $scope.allMaterial[i].comments[j].original = $scope.allMaterial[i]._id;
+                    $scope.allMaterial[i].comments[j].originalName = $scope.allMaterial[i].title;
+                    $scope.myMaterialComments.push($scope.allMaterial[i].comments[j]);
+                  }
+                }
+
             }
+            console.log('myComment', $scope.myMaterialComments);
             console.log($scope.myContributions);
         })
         .error(function (data, status) {

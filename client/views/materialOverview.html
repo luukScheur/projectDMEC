@@ -33,7 +33,15 @@
 	<h2>Materiaal overzicht</h2>
 	<!-- filter filterTypes is custom (see routes.js)  -->
 	<div class="col-lg-3" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
-		<h4> <a href="#/material/{{item._id}}"><i class="fa fa-edit"></i></a> {{item.title}} </h4>
+		<h4>
+			<a href="#/material/{{item._id}}">
+				<i class="fa fa-edit"></i>
+			</a>
+			{{item.title}}
+			<span class="label label-primary">
+				<i class="fa fa-bus"></i> {{item.countClones}}
+			</span>
+		</h4>
 		<p> {{item.type}}</p>
 		<span>	beschrijving: {{item.description}}
 				likes: {{item.likes}}

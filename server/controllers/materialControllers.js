@@ -25,9 +25,12 @@ exports.getMaterialClones = function (req, res) {
 		res.send(data);
 	});
 };
-
+exports.putComment = function (req, res) {
+	material.putComment(req.body, function(data) {
+		res.send(data);
+	});
+};
 exports.putMaterial = function (req, res) {
-	console.log('backend gotten', req.body);
 	material.putMaterial(req.body, function(data) {
 		res.send(data);
 	});

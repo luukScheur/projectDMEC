@@ -2,7 +2,9 @@ var materialController = function ($http, $scope, $routeParams, $location, $wind
 
   $scope.materialTypes = materialTypes;
   $scope.new = true;
+  $scope.materialTab = 'overview';
   $scope.userID, $scope.material, $scope.materialClones;
+  $scope.randomViews = Math.random()*100;
 
   //get user iD
   $http.get("/getUser")
@@ -33,7 +35,21 @@ var materialController = function ($http, $scope, $routeParams, $location, $wind
 
 
   }
-
+  $scope.comment = function () {
+      $http.put('/materialComment/' + $routeParams.id, {
+        _id: $routeParams.id,
+        description: $scope.commentDescription,
+        author: $scope.user._id,
+        authorName: $scope.user.name
+        })
+        .success(function (data) {
+            console.log(data);
+            $scope.commentMessage = 'Reactie is geplaatst';
+        })
+        .error(function (data, status) {
+            console.log("ERROR: show question controller error", status, data);
+        });
+  }
   $scope.edit = function () {
     if($scope.description == '') {
       alert ('vul wat in..');

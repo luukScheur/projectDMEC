@@ -8,7 +8,8 @@ var LessonSchema = mongoose.Schema({
     views : {type : Number, default : 0},
     publishdate : {type : Date, default : Date.now},
     tags : {type: []},
-    material : {material: []}
+    material : {material: []},
+    author : {type : String, required : true}
 }, {collection : "lessons"});
 
 var Lesson = mongoose.model('Lesson', LessonSchema);
@@ -55,6 +56,7 @@ exports.postLesson = function (lesson, callback) {
     newLesson.publishdate = lesson.publishdate || new Date();
     newLesson.tags = lesson.tags;
     newLesson.material = lesson.material;
+    newLesson.author = lesson.author;
     console.log(newLesson);
 
     newLesson.save(function (err, lesson) {
@@ -64,6 +66,18 @@ exports.postLesson = function (lesson, callback) {
         } else {
             callback(response("Het opslaan van de vraag is gelukt.", lesson));
         }
+    });
+}
+
+exports.getLessonByUser = function (id, callback) {
+    'use strict';
+    Lesson.find({author : id}, function (err, lesson) {
+        if (err) {
+            console.log(err);
+            callback(response("het zoeken naar de vraag is mislukt.", {}));
+            return;
+        }
+        callback(response("het zoeken naar de vraag is gelukt.", lesson));
     });
 }
 /*

@@ -1,5 +1,5 @@
 <div class="col-lg-3">
-<h2> Filters</h2>
+    <h2> Filters</h2>
     <br>
     <span>Sorteren op</span>
     <br>
@@ -15,6 +15,7 @@
     <br><br>
     <span>Soort materiaal</span>
     <br>
+
     <div id="materialTypesFilter" ng-repeat="type in materialTypes" ng-click="toggleSelection(type)">
         <input type="checkbox"
                ng-checked="selectedTypes.indexOf('{{type}}') > -1"
@@ -25,43 +26,71 @@
 </div>
 
 <div class="col-lg-9 videosSidebar">
-    <h2> Gerelateerde video's</h2>
-    <div class="tabs">
-        <ul class="tab-links">
-            <li class="active"><a href="#tab1">Tab #1</a></li>
-            <li><a href="#tab2">Tab #2</a></li>
-            <li><a href="#tab3">Tab #3</a></li>
-        </ul>
+    <h2>Materiaal</h2>
 
-        <div class="tab-content">
-            <div id="tab1" class="tab active">
-                <div ng-click = "addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
-                    <h4>{{item.title}}</h4><i ng-click = "addFavorite(item._id)" class="fa fa-star-o"></i>
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li ng-model="materialTab" ng-click="materialTab = 'allMaterial'" role="presentation" ng-class="{active : materialTab=='allMaterial'}"><a>Alle materiaal</a></li>
+            <li ng-model="materialTab" ng-click="materialTab = 'favoriteMaterial'" role="presentation" ng-class="{active : materialTab=='favoriteMaterial'}"><a>Favorieten</a></li>
+            <li ng-model="materialTab" ng-click="materialTab = 'myMaterial'" role="presentation" ng-class="{active : materialTab=='myMaterial'}"><a>Mijn materiaal</a></li>
+            <li ng-model="materialTab" ng-click="materialTab = 'usedMaterial'" role="presentation" ng-class="{active : materialTab=='usedMaterial'}"><a>Eerder gebruikt materiaal</a></li>
+        </ul>
+        <div class="tabContent">
+            <div ng-show="materialTab=='allMaterial'">
+                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block"
+                     ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
+                    <h4>{{item.title}}</h4><i id="favoriteIcon" ng-click="toggleFavorite(item._id)"
+                                              class="{{item.favoriteIcon}}"></i>
+
                     <p> {{item.type}} </p>
                     <span>Door: {{item.author}}</span>
-                    </div>
+                </div>
             </div>
 
-            <div id="tab2" class="tab">
-                <div class="col-lg-3" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
-                    <h4>{{item.title}}</h4>
+            <div ng-show="materialTab=='favoriteMaterial'">
+                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block"
+                     ng-repeat="item in favoriteMaterial | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
+                    <h4>{{item.title}}</h4><i id="favoriteIcon" ng-click="toggleFavorite(item._id)"
+                                              class="{{item.favoriteIcon}}"></i>
+
                     <p> {{item.type}} </p>
                     <span>Door: {{item.author}}</span>
                 </div>
 
             </div>
 
-            <div id="tab3" class="tab">
-                <div class="col-lg-3" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
-                    <h4>{{item.title}}</h4>
+            <div ng-show="materialTab=='myMaterial'">
+                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block"
+                     ng-repeat="item in myMaterial | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
+                    <h4>{{item.title}}</h4><i id="favoriteIcon" ng-click="toggleFavorite(item._id)"
+                                              class="{{item.favoriteIcon}}"></i>
+
                     <p> {{item.type}} </p>
                     <span>Door: {{item.author}}</span>
-                 </div>
+                </div>
+
+            </div>
+
+            <div ng-show="materialTab=='usedMaterial'">
+                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block"
+                     ng-repeat="item in usedMaterial | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
+                    <h4>{{item.title}}</h4><i id="favoriteIcon" ng-click="toggleFavorite(item._id)"
+                                              class="{{item.favoriteIcon}}"></i>
+
+                    <p> {{item.type}} </p>
+                    <span>Door: {{item.author}}</span>
+                </div>
+
             </div>
 
         </div>
+    </div>
+
+
+    </div>
     <div class="col-lg-2 {{material.type}} .block" ng-repeat="material in lessonMaterials">
-        </br> </br>
+        </br> <i ng-click = "addMaterialLeft(material.materialId)" class="fa fa-chevron-circle-left fa-3x"></i>
+        <i ng-click = "addMaterialRight(material.materialId)" class="fa fa-chevron-circle-right fa-3x"></i></br>
     </div>
     <div>
         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
@@ -69,15 +98,18 @@
         </button>
 
         <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Gegevens</h4>
                     </div>
-                    <form role="form"><div class="modal-body">
-                        Voor u de les kan opslaan, hebben we nog een titel en omschrijving nodig.
+                    <form role="form">
+                        <div class="modal-body">
+                            Voor u de les kan opslaan, hebben we nog een titel en omschrijving nodig.
 
                             <div class="form-group">
                                 <label for="title">Titel</label>
@@ -88,15 +120,18 @@
                                 <textarea class="form-control" id="description"></textarea>
                             </div>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuleren</button>
-                        <button id="saveLesson" type="submit" class="btn btn-primary" data-dismiss="modal">Opslaan</button>
-                    </div></form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuleren</button>
+                            <button id="saveLesson" type="submit" class="btn btn-primary" data-dismiss="modal">Opslaan
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
 
     </div>
 </div>
+
 

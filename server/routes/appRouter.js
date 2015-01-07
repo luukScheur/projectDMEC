@@ -24,6 +24,7 @@ module.exports = function (express) {
     app.post('/lesson', lessonController.postLesson);
     app.get('/lesson', lessonController.getLessons);
     app.get('/lesson/:id', lessonController.getLesson);
+    app.get('/lessonUser/:id', lessonController.getLessonByUser);
 
 	app.post('/user', userController.postUser);
 	app.get('/user', userController.getUsers);

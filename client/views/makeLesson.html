@@ -26,23 +26,65 @@
 </div>
 
 <div class="col-lg-9 videosSidebar">
-    <h2> Gerelateerde video's</h2>
+    <h2>Materiaal</h2>
 
-    <div>
-        <button type="button" class="btn btn-primary btn-lg">Alle materiaal</button>
-        <button ng-click="showFavorite()" type="button" class="btn btn-primary btn-lg">Favoriet materiaal</button>
-        <button type="button" class="btn btn-primary btn-lg"> --</button>
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li ng-model="materialTab" ng-click="materialTab = 'allMaterial'" role="presentation" ng-class="{active : materialTab=='allMaterial'}"><a>Alle materiaal</a></li>
+            <li ng-model="materialTab" ng-click="materialTab = 'favoriteMaterial'" role="presentation" ng-class="{active : materialTab=='favoriteMaterial'}"><a>Favorieten</a></li>
+            <li ng-model="materialTab" ng-click="materialTab = 'myMaterial'" role="presentation" ng-class="{active : materialTab=='myMaterial'}"><a>Mijn materiaal</a></li>
+            <li ng-model="materialTab" ng-click="materialTab = 'usedMaterial'" role="presentation" ng-class="{active : materialTab=='usedMaterial'}"><a>Eerder gebruikt materiaal</a></li>
+        </ul>
+        <div class="tabContent">
+            <div ng-show="materialTab=='allMaterial'">
+                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block"
+                     ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
+                    <h4>{{item.title}}</h4><i id="favoriteIcon" ng-click="toggleFavorite(item._id)"
+                                              class="{{item.favoriteIcon}}"></i>
 
-        <div>
-            <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block"
-                 ng-repeat="item in showMaterial | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
-                <h4>{{item.title}}</h4><i id="favoriteIcon" ng-click="toggleFavorite(item._id)"
-                                          class="{{item.favoriteIcon}}"></i>
-
-                <p> {{item.type}} </p>
-                <span>Door: {{item.author}}</span>
+                    <p> {{item.type}} </p>
+                    <span>Door: {{item.author}}</span>
+                </div>
             </div>
+
+            <div ng-show="materialTab=='favoriteMaterial'">
+                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block"
+                     ng-repeat="item in favoriteMaterial | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
+                    <h4>{{item.title}}</h4><i id="favoriteIcon" ng-click="toggleFavorite(item._id)"
+                                              class="{{item.favoriteIcon}}"></i>
+
+                    <p> {{item.type}} </p>
+                    <span>Door: {{item.author}}</span>
+                </div>
+
+            </div>
+
+            <div ng-show="materialTab=='myMaterial'">
+                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block"
+                     ng-repeat="item in myMaterial | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
+                    <h4>{{item.title}}</h4><i id="favoriteIcon" ng-click="toggleFavorite(item._id)"
+                                              class="{{item.favoriteIcon}}"></i>
+
+                    <p> {{item.type}} </p>
+                    <span>Door: {{item.author}}</span>
+                </div>
+
+            </div>
+
+            <div ng-show="materialTab=='usedMaterial'">
+                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block"
+                     ng-repeat="item in usedMaterial | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
+                    <h4>{{item.title}}</h4><i id="favoriteIcon" ng-click="toggleFavorite(item._id)"
+                                              class="{{item.favoriteIcon}}"></i>
+
+                    <p> {{item.type}} </p>
+                    <span>Door: {{item.author}}</span>
+                </div>
+
+            </div>
+
         </div>
+    </div>
 
 
     </div>

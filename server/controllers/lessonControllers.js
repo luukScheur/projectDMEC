@@ -17,3 +17,8 @@ exports.getLesson = function (req, res) {
 		res.send(data);
 	});
 };
+exports.getLessonByUser = function (req, res) {
+    lesson.getLessonByUser(req.params.id, function(data) {
+        res.send(data);
+    });
+};

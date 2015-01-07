@@ -9,12 +9,27 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
                 $scope.user = data.data;
                 console.log("user: ", $scope.user);
                 $scope.userID = data.data._id;
+
+
+                $http.get("/lessonUser/" + $scope.userID)
+                    .success(function (data) {
+                        console.log("lesson: ", data);
+                        $scope.getUsedMaterial(data);
+                    })
+                    .error(function (data, status) {
+                        alert("AJAX ERROR");
+                        console.log("ERROR: show question controller error", status, data);
+                    });
+
+
             }
         });
 
     $scope.lessonMaterials = [{materialId: "none", type: "none"}];
     $scope.materialTypes = materialTypes;
     $scope.favoriteMaterial = [];
+    $scope.myMaterial = [];
+    $scope.usedMaterial = [];
 
     jQuery(document).ready(function() {
         jQuery('.tabs .tab-links a').on('click', function(e)  {
@@ -45,8 +60,12 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
                         console.log($scope.favoriteMaterial);
                     }
                 }
+
+                if ($scope.material[i].author === $scope.userID) {
+                    $scope.myMaterial.push($scope.material[i]);
+                }
             }
-            $scope.showMaterial = $scope.material;
+
 
         })
         .error(function (data, status) {
@@ -54,21 +73,52 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
             console.log("ERROR: show question controller error", status, data);
         });
 
-    $scope.showFavorite = function () {
-        $scope.showMaterial = $scope.favoriteMaterial;
+    $scope.getUsedMaterial = function (data) {
+        data = data.data;
+        for (var i = 0; i < data.length; i ++) {
+            console.log(data[i]);
+            for (var j = 0; j < data[i].material.length; j ++){
+                console.log(data[i].material[j]);
+                $http.get("/material/" + data[i].material[j])
+                    .success(function (material) {
+                        material = material.data
+                        console.log("lesson: ", material);
+                        $scope.usedMaterial.push(material);
+                        console.log("used material: ", $scope.usedMaterial);
+                    })
+                    .error(function (data, status) {
+                        alert("AJAX ERROR");
+                        console.log("ERROR: show question controller error", status, data);
+                    });
+
+            }
+        }
     };
+
+
 
     $scope.addMaterialLeft = function (id) {
         var oldValue;
         console.log("to the left... to the left!");
         for (var i = 0; i < $scope.lessonMaterials.length; i ++) {
-            console.log($scope.lessonMaterials[i].materialId + "  " + id);
+            //console.log($scope.lessonMaterials[i].materialId + "  " + id);
             if ($scope.lessonMaterials[i].materialId === id) {
-                console.log("Oud: ", $scope.lessonMaterials);
-                oldValue = $scope.lessonMaterials[i - 1];
-                $scope.lessonMaterials[i - 1] = $scope.lessonMaterials[i];
-                $scope.lessonMaterials[i] = oldValue;
-                console.log("Nieuw: ", $scope.lessonMaterials);
+                if (i == 0) {
+
+                    oldValue = $scope.lessonMaterials[0];
+                    $scope.lessonMaterials.shift();
+                    $scope.lessonMaterials.push(oldValue);
+                    i = $scope.lessonMaterials.length;
+
+                } else {
+
+                    console.log("Oud: ", $scope.lessonMaterials);
+                    oldValue = $scope.lessonMaterials[i - 1];
+                    $scope.lessonMaterials[i - 1] = $scope.lessonMaterials[i];
+                    $scope.lessonMaterials[i] = oldValue;
+                    console.log("Nieuw: ", $scope.lessonMaterials);
+                    i = $scope.lessonMaterials.length;
+                }
 
             }
         }
@@ -80,15 +130,26 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
         for (var j = 0; j < $scope.lessonMaterials.length; j ++) {
             console.log($scope.lessonMaterials[j].materialId + "  " + id);
             if ($scope.lessonMaterials[j].materialId === id) {
-                console.log("Oud: ", $scope.lessonMaterials);
-                oldValue = $scope.lessonMaterials[j + 1];
-                $scope.lessonMaterials[j + 1] = $scope.lessonMaterials[j];
-                $scope.lessonMaterials[j] = oldValue;
-                console.log("Nieuw: ", $scope.lessonMaterials);
+
+                if (j + 1 === $scope.lessonMaterials.length){
+                    oldValue = $scope.lessonMaterials[0];
+                    $scope.lessonMaterials.pop();
+                    $scope.lessonMaterials.unshift(oldValue);
+                    i = $scope.lessonMaterials.length;
+                } else {
+                    console.log("Oud: ", $scope.lessonMaterials);
+                    oldValue = $scope.lessonMaterials[j + 1];
+                    $scope.lessonMaterials[j + 1] = $scope.lessonMaterials[j];
+                    $scope.lessonMaterials[j] = oldValue;
+                    console.log("Nieuw: ", $scope.lessonMaterials);
+                    i = $scope.lessonMaterials.length;
+
+                }
 
             }
         }
     };
+
     $scope.addMaterialToLesson = function(id, type) {
         console.log(id, type);
         if ($scope.lessonMaterials[0].materialId === "none") {
@@ -119,6 +180,7 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
                 }
             }
         }
+        event.stopPropagation();
 
     };
 
@@ -169,7 +231,8 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
         var newLesson = {
             title: $('#title').val(),
             description: $('#description').val(),
-            material: materialArray
+            material: materialArray,
+            author: $scope.userID
         };
         console.log(newLesson);
 

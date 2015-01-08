@@ -1,30 +1,21 @@
 <div class="col-lg-3 myAccountPanel">
-  <h2>{{user.name}}</h2>
+  <h3>{{user.name}}</h3>
   <img src="{{user.profilePicture}}">
   <br><br>
   <span>Leeftijd: {{user.age}}</span>
   <br>
   <span>Geslacht: {{user.gender}}</span>
-  <br><br>
-  <span ng-show="user.school">School: {{user.school}}</span>
   <br>
-  <span>123 likes (statisch)</span>
+  <span>{{user.favorites.length}} favorieten</span>
+  <br>
   <hr>
-  <button ng-click="tab='lesson'" class="btn"> Lessen</button>
-  <button ng-click="tab='material'" class="btn"> Materiaal</button>
-  <button ng-click="tab='comment'" class="btn"> Reacties</button>
-  <button ng-click="tab='contribution'" class="btn"> Bijdrage</button>
+  <button ng-click="tab='lesson'" class="btn btn-true"> Lessen</button>
+  <button ng-click="tab='material'" class="btn btn-false"> Materiaal</button>
+  <button ng-click="tab='comment'" class="btn btn-true"> Reacties</button>
+  <button ng-click="tab='contribution'" class="btn btn-false"> Bijdrage</button>
 </div>
 
-<div class="col-lg-9">
-  <div class="col-lg-4">
-    <h2>Items</h2>
-  </div>
-  <div class="col-lg-8 searchDiv">
-    <div>
-      <input type="text" placeholder="search">
-    </div>
-  </div>
+<div class="col-lg-9 myAccountView">
 
   <div class="col-lg-12">
     <div ng-show="tab=='lesson'">
@@ -40,6 +31,8 @@
     <div ng-show="tab=='material'">
       <h2>Materiaal</h2>
       <a href="#/material/0"<button class="btn btn-success">Nieuw materiaal</button></a>
+      <span ng-hide="myMaterial[0]"> Nog geen materiaal geplaatst </span>
+
       <div ng-repeat="material in myMaterial" class="col-lg-12">
         <h4><a href="#/material/{{material._id}}"><i class="fa fa-edit"></i></a>{{material.title}}</h4>
         <span>Type: {{material.type}}, likes: {{material.likes}}, views: {{material.views}}</span>
@@ -55,6 +48,7 @@
       <div class="tabContent">
         <div ng-show="commentTab=='material'">
           <h3> Materialreacties </h3>
+          <span ng-hide="myMaterialComments[0]">Nog geen reactie geplaatst </span>
           <div ng-repeat="comment in myMaterialComments">
             <span>{{comment.description}} <span style="font-size: 10px"> op {{comment.publishdate}} </span>( reactie op: <a href="#/material/{{comment.original}}">{{comment.originalName}}</a>)</span>
           </div>
@@ -66,10 +60,18 @@
     </div>
     <div ng-show="tab=='contribution'">
       <h2>Bijdrage</h2>
+      <hr>
+      <span ng-hide="myContributions[0]">Nog geen bijdrage geplaatst </span>
       <div ng-repeat="material in myContributions" class="col-lg-12">
-        <h4><a href="#/material/{{material._id}}"><i class="fa fa-edit"></i></a>{{material.title}}<span> (<a href="#/material/{{material.original}}">origineel</a>)</span></h4>
-        <span>likes: {{material.likes}}, views: {{material.views}}.</span>
-        <span>Omschrijving: {{material.description}}</span>
+        <div class="col-md-1" style="margin-top: 5px">
+          <a href="#/material/{{material._id}}"><i class="fa fa-arrow-right fa-2x"></i></a>
+        </div>
+        <div class="col-md-10">
+          <h4 class="nomargin">{{material.title}} (<a href="#/material/{{material.original}}">origineel</a>)</h4>
+          <span>likes: {{material.likes}}, views: {{material.views}}.</span>
+          <span>Omschrijving: {{material.description}}</span>
+        </div>
+        <hr class="col-md-12 nopadding">
       </div>
     </div>
 

@@ -31,9 +31,9 @@
 	<h4>Materiaal overzicht</h4>
 	<!-- filter filterTypes is custom (see routes.js)  -->
 	<div class="col-lg-3 materialObject {{item.type}}" ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
-		<a href="#/material/{{item._id}}">
 			<span class="materialDate">{{item.publishdate |limitTo:10}}</span>
-			<span class="materialFavo"><i class="{{item.favoriteIcon}}"></i></span>
+			<span class="materialFavo"><i ng-click="toggleFavorite(item._id)" class="{{item.favoriteIcon}}"></i></span>
+		<a href="#/material/{{item._id}}">
 			<div class="bigIcon col-md-12">
 					<div class="bigIconIcon col-md-12">
 						<i 	class="fa fa-4x"

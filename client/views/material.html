@@ -9,6 +9,12 @@
     </div>
     <div class="col-md-2">
       <div ng-show="new==false">
+        <i style="color: black" class="fa fa-lg"
+          ng-class="{
+                'fa-star-o': favorited==false,
+                'fa-star' : favorited==true
+              }"
+          ng-click="toggleFavorite()"></i>
         <a ng-show="material.original" href="#/material/{{material.original}}"><button class="btn btn-primary">Origineel</button></a>
         <a href="#/material/0"><button class="btn btn-primary">Nieuw</button></a>
       </div>

@@ -4,6 +4,8 @@ var materialOverviewController = function ($http, $scope, $routeParams, $locatio
 
 	$scope.material = [];
 	$scope.materialTypes = materialTypes;
+	$scope.favoriteMaterial = [];
+
 	//get user iD
 	$http.get("/getUser")
 			.success(function (data) {
@@ -76,5 +78,58 @@ var materialOverviewController = function ($http, $scope, $routeParams, $locatio
 		  $scope.selectedTypes.push(selectedType);
 		}
 		console.log($scope.selectedTypes);
+	};
+
+	/* ---------- Favorites stuff -----------------------__*/
+	$scope.toggleFavorite = function (materialId) {
+			for (var i = 0; i < $scope.material.length; i ++) {
+					if ($scope.material[i]._id === materialId) {
+							if ($scope.material[i].favoriteIcon === "fa fa-star"){
+									$scope.removeFavorite(materialId);
+									console.log("remove favorite");
+									$scope.material[i].favoriteIcon = "fa fa-star-o";
+							} else if ($scope.material[i].favoriteIcon === "fa fa-star-o"){
+									$scope.addFavorite(materialId);
+									console.log("add favorite");
+									$scope.material[i].favoriteIcon = "fa fa-star";
+							}
+					}
+			}
+			event.stopPropagation();
+
+	};
+
+	$scope.addFavorite = function(materialId) {
+			$scope.user.favorites.push(materialId);
+
+			$http({method: 'PUT', url: '/user/' + $scope.userID, data: $scope.user}).
+					success(function (data) {
+							console.log("Added favorite: ", data);
+							//$location.path("");
+					})
+					.error(function (data, status) {
+							alert("AJAX ERROR");
+							console.log("ERROR: question controller error", status, data);
+					});
+
+	};
+
+	$scope.removeFavorite = function(materialId) {
+			for (var i = 0; i < $scope.user.favorites.length; i ++){
+					if( $scope.user.favorites[i] === materialId){
+							$scope.user.favorites.splice(i,1);
+					}
+			}
+
+			$http({method: 'PUT', url: '/user/' + $scope.userID, data: $scope.user}).
+					success(function (data) {
+							console.log("Deleted favorite: ", data);
+							//$location.path("");
+					})
+					.error(function (data, status) {
+							alert("AJAX ERROR");
+							console.log("ERROR: question controller error", status, data);
+					});
+
 	};
 };

@@ -24,10 +24,14 @@ var materialController = function ($http, $scope, $routeParams, $location, $wind
     $scope.new = false;
     $http.get("/material/" + $routeParams.id)
         .success(function (data) {
+            $scope.favorited = false;
             $scope.material = data.data;
             $scope.title = $scope.material.title;
             $scope.description = $scope.material.description;
             $scope.selectedType = $scope.material.type;
+            if($scope.user.favorites.indexOf($scope.material._id) >= 0) {
+              $scope.favorited = true;
+            }
         })
     $http.get("/materialClones/" + $routeParams.id)
         .success(function (data) {
@@ -106,4 +110,51 @@ var materialController = function ($http, $scope, $routeParams, $location, $wind
             console.log("ERROR: show question controller error", status, data);
         });
   }
+
+  /* ---------- Favorites stuff -----------------------__*/
+  $scope.toggleFavorite = function () {
+      if ($scope.favorited === true){
+          $scope.removeFavorite($scope.material._id);
+          $scope.favorited = false;
+      } else if ($scope.favorited === false){
+          $scope.addFavorite($scope.material._id);
+          $scope.favorited = true;
+      }
+      event.stopPropagation();
+
+  };
+
+  $scope.addFavorite = function(materialId) {
+      $scope.user.favorites.push(materialId);
+
+      $http({method: 'PUT', url: '/user/' + $scope.userID, data: $scope.user}).
+          success(function (data) {
+              console.log("Added favorite: ", data);
+              //$location.path("");
+          })
+          .error(function (data, status) {
+              alert("AJAX ERROR");
+              console.log("ERROR: question controller error", status, data);
+          });
+
+  };
+
+  $scope.removeFavorite = function(materialId) {
+      for (var i = 0; i < $scope.user.favorites.length; i ++){
+          if( $scope.user.favorites[i] === materialId){
+              $scope.user.favorites.splice(i,1);
+          }
+      }
+
+      $http({method: 'PUT', url: '/user/' + $scope.userID, data: $scope.user}).
+          success(function (data) {
+              console.log("Deleted favorite: ", data);
+              //$location.path("");
+          })
+          .error(function (data, status) {
+              alert("AJAX ERROR");
+              console.log("ERROR: question controller error", status, data);
+          });
+
+  };
 };

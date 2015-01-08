@@ -32,6 +32,10 @@ MOOCBOOKApp.config(['$routeProvider', function ($routeProvider) {
 		templateUrl: './views/materialOverview.html',
 		controller: materialOverviewController
 	});
+    $routeProvider.when('/lessonOverview', {
+        templateUrl: './views/lessonOverview.html',
+        controller: lessonOverviewController
+    });
   $routeProvider.when('/watchVideo/:id', {
       templateUrl: './views/watchVideo.html',
       controller: videoController
@@ -48,6 +52,10 @@ MOOCBOOKApp.config(['$routeProvider', function ($routeProvider) {
     templateUrl: './views/material.html',
     controller: materialController
   });
+    $routeProvider.when('/lesson/:id', {
+        templateUrl: './views/lesson.html',
+        controller: watchLessonController
+    });
   $routeProvider.when('/myAccount', {
     templateUrl: './views/myAccount.html',
     controller: myAccountController

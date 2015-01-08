@@ -16,11 +16,19 @@ var materialOverviewController = function ($http, $scope, $routeParams, $locatio
     $http.get("/material")
         .success(function (data) {
 						console.log('materialenOntvangen', data.data);
-
 						for(var i = 0; i < data.data.length; i++){
 							if(data.data[i].original==null){
 								$scope.material.push(data.data[i]);
 							}
+						}
+						for (var i = 0; i < $scope.material.length; i ++) {
+								$scope.material[i].favoriteIcon = "fa fa-star-o";
+								for (var j = 0; j < $scope.user.favorites.length; j ++) {
+										if ($scope.material[i]._id === $scope.user.favorites[j]) {
+												$scope.material[i].favoriteIcon = "fa fa-star";
+												$scope.favoriteMaterial.push($scope.material[i]);
+										}
+								}
 						}
 						$scope.getClones();
         })

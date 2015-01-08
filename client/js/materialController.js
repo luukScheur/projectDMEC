@@ -91,10 +91,6 @@ var materialController = function ($http, $scope, $routeParams, $location, $wind
     }
   }
   $scope.upload = function () {
-    var file = document.getElementById('image-file');
-    if(file.files.length == 0){
-      alert('geen bestand geselecteerd');
-    } else {
       $http.post('/material', {
         title: $scope.title,
         description: $scope.description,
@@ -109,6 +105,5 @@ var materialController = function ($http, $scope, $routeParams, $location, $wind
         .error(function (data, status) {
             console.log("ERROR: show question controller error", status, data);
         });
-    }
   }
 };

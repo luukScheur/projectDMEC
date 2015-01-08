@@ -132,17 +132,17 @@ var makeLessonController = function ($http, $scope, $routeParams, $location, $wi
             if ($scope.lessonMaterials[j].materialId === id) {
 
                 if (j + 1 === $scope.lessonMaterials.length){
-                    oldValue = $scope.lessonMaterials[0];
+                    oldValue = $scope.lessonMaterials[j];
                     $scope.lessonMaterials.pop();
                     $scope.lessonMaterials.unshift(oldValue);
-                    i = $scope.lessonMaterials.length;
+                    j = $scope.lessonMaterials.length;
                 } else {
                     console.log("Oud: ", $scope.lessonMaterials);
                     oldValue = $scope.lessonMaterials[j + 1];
                     $scope.lessonMaterials[j + 1] = $scope.lessonMaterials[j];
                     $scope.lessonMaterials[j] = oldValue;
                     console.log("Nieuw: ", $scope.lessonMaterials);
-                    i = $scope.lessonMaterials.length;
+                    j = $scope.lessonMaterials.length;
 
                 }
 

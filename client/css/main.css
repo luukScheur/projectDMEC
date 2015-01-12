@@ -1,11 +1,37 @@
 ::-moz-selection { /* Code for Firefox */
-    color: #A3FF75;
+    color: inherit;
     background: inherit;
 }
 
 ::selection {
-    color: #A3FF75;
+    color: inherit;
     background: inherit;
+}
+
+html, body {
+  font-family: 'Open Sans', sans-serif !important;
+  min-height: 100%;
+}
+body {
+  background-color: inherit;
+}
+html {
+  background-image: url('../img/bg.jpg');
+  background-size: cover;
+}
+/*
+.col-lg-3, .col-lg-4, .col-lg-6, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+  border: none;
+  background: white;
+  border-radius: 2px;
+}
+.col-md-3, .col-md-4, .col-md-6, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+  border: none;
+  background: white;
+  border-radius: 2px;
+}*/
+h3 {
+  font-size: 21px !important;
 }
 .tabContent {
   border-left: 1px solid rgb(228, 226, 226);
@@ -30,11 +56,15 @@
   margin: 0;
   padding: 0 !important;
 }
+.navbar-brand {
+  padding: 10px;
+}
+.navbar-brand img {
+  width: 70%;
+}
 .navImg img {
-  width: 80%;
-  margin-top: 10%;
-  margin-left: 10%;
-  margin-bottom: 10%;
+  width: 40px;
+  margin: 5px;
   border-radius: 100%;
 }
 .user-background {
@@ -56,21 +86,69 @@
 	max-height: 300px;
 }
 .homepageblock .content {
-	border-radius: 3px;
-	padding: 1%;
+	border-radius: 2px;
+	padding: 3%;
   height: 200px;
-	border: 1px solid black;
+  background: white;
 }
-.homepageblock .content i {
+.homepageblock .content h3 {
+  margin: 0;
+}
+.homepageblock .content .i {
 	position: relative;
 	float: right;
 	cursor: pointer;
+  margin-top: 6px;
+  margin-right: 6px;
+}
+.homepageblock .homepageHR:before {
+  content: '';
+  width: 30%;
+  background: #1fbca7;
+  position: absolute;
+  left: 0;
+  top: -2px;
+  height: 2px;
+}
+.homepageblock .homepageHR {
+  width: 100%;
+  background: grey;
+  position: relative;
+}
+.materialIcon {
+  margin-left: -7px;
+  margin-top: 6px;
+}
+.navbar-color {
+  background: #36b59f; /* 36b59f */
+  border: none;
+  -webkit-box-shadow: inset 0 10px 10px -10px rgba(19,158,139,0.9);
+    -moz-box-shadow: inset 0 10px 10px -10px rgba(19,158,139,0.9);
+    box-shadow: inset 0 10px 10px -10px rgba(19,158,139,0.9);
+}
+.navbar-fixed-top {
+  background: white;
+  border: none;
+}
+.homepageblockfooterText {
+  margin: 0.5% 0 0.5% 1%;
+}
+.homepageblockfooterText span{
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 11px;
 }
 .homepageblockfooter {
-	border: 1px solid black;
 	overflow: hidden;
 	margin: 1%;
-	background-color: buttonface;
+  margin-top: 0;
+}
+.homepageblockfooter button{
+  background: #22C9B2; /* 1fbca7 */
+  color: white;
+  margin-bottom: 5px;
+  margin-right: 5px;
 }
 .addBlockButton {
   float: left;
@@ -107,28 +185,132 @@
 
 #materialTypesFilter {
 	cursor: pointer;
-	border: 1px solid black;
-	border-radius: 5px;
 	padding: 5px;
-	margin-bottom: 5px;
+	width: 100%;
+}
+.filterColor {
+  background: rgba(129, 247, 218, 0.62);
 }
 .materialFilter {
-	border-right: 1px solid black;
+	margin-right: 1%;
+  padding: 0;
+  width: 24%;
+  color: white;
+  padding-bottom: 14px;
+  background: #1fbca7;
 }
+.materialFilter select {
+  color: black;
+  margin-left: 10px;
+}
+.materialFilter input[type='text']{
+  width: 100%;
+border: none;
+padding: 5px;
+}
+.materialOverview {
+  background: rgb(248, 248, 248);
+}
+.materialObject {
+  width: 24%;
+  margin: 0.5%;
+  padding: 0;
+}
+.materialDate {
+  margin: 4px;
+  color: white;
+}
+.materialFavo {
+  float: right;
+  color: white;
+  margin-right: 3px;
+}
+.materialTitle {
+  background-color: white !important;
+  color: rgb(166,166,166);
+  padding: 7px;
+}
+.materialObject a{
+  color: white;
+}
+materialObject a:hover {
+  color: white;
+}
+.materialObject .col-md-12 {
+  background-color: inherit;
+  border-radius: 0;
+}
+.bigIcon{
+  text-align: center;
+  padding-left: 3px;
+padding-right: 3px;
+}
+.bigIconIcon{
+  padding: 10px 0 10px 0;
+}
+/* ---------------------------------------------------------------------
+ *	Material page
+ * -------------------------------------------------------------------- */
 
+.viewMaterial {
+  padding: 10px;
+  background: white;
+}
+.viewMaterial input[type='text']{
+  width: 95%;
+  padding: 5px 5px 5px 0;
+  border: none;
+  font-size: 20px;
+}
+.viewMaterial textarea {
+  width: 100%;
+  min-width: 60%;
+  max-width: 100%;
+  min-height: 100px;
+  max-height: 400px;
+}
+.viewMaterial .saveButton{
+  margin-top: 10px;
+}
+.materialSummary {
+  background: white;
+  padding-bottom: 10px;
+  margin-top: 10px;
+  padding-top: 10px;
+}
 /* ---------------------------------------------------------------------
  *	MyAccount
  * -------------------------------------------------------------------- */
 
 .myAccountPanel {
-  border-right: 1px solid black;
+  width: 24%;
+  margin-right: 1%;
+  background: #1fbca7;
+  padding: 0;
+  color: white;
+}
+.myAccountPanel h3, .myAccountPanel span {
+  margin-left: 10px;
+}
+.myAccountPanel img {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 .myAccountPanel button {
   width: 100%;
+  border-radius: 0;
+  border: 0;
 }
-.searchDiv div{
-  float: right;
-  margin-top: 25px;
+.myAccountPanel .btn-true {
+  background: rgba(129, 247, 218, 0.62);
+}
+.myAccountPanel .btn-false {
+  background: inherit;
+}
+.myAccountView {
+  background: white;
+  min-height: 550px;
 }
 
 /* ---------------------------------------------------------------------
@@ -148,19 +330,28 @@
 }
 
 .pdf{
-    background-color: #a94442;
+    background-color: #EC0500;
 }
-
 .word{
     background-color: #0b97c4;
 }
-
-.image{
-    background-color: #999999;
+.opdracht{
+    background-color: #0b97c4;
 }
-
+.image{
+    background-color: #4FE774;
+}
 .none{
     background-color: #262626;
+}
+.youtube {
+    background-color: #FF0000;
+}
+.powerpoint {
+    background-color: #D167AB;
+}
+.excel {
+    background-color: #6EC979;
 }
 
 /*----- Tabs -----*/

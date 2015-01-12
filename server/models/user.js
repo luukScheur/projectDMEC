@@ -51,11 +51,11 @@ exports.postUser = function (user, callback) {
     newUser.name = user.name;
     newUser.gender = user.gender || 'male';
     newUser.age = user.age;
-    newUser.profilePicture = user.profilePicture || 'http://www.lorempixel.com/200/200';
+    newUser.profilePicture = user.profilePicture || 'http://www.lorempixel.com/200/200/people';
     newUser.blocks = user.blocks || [0,1,2,3,4,5];
     newUser.school = user.school || null;
     newUser.registerDate = user.registerDate || new Date();
-    newUser.favorites = user.favorites || ["none"];
+    newUser.favorites = user.favorites || [];
     console.log(newUser);
 
     newUser.save(function (err, user) {

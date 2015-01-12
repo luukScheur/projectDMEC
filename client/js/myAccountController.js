@@ -6,6 +6,7 @@ var myAccountController = function ($http, $scope, $routeParams, $location, $win
   $scope.myMaterial = [];
   $scope.myContributions = [];
   $scope.myMaterialComments = [];
+  $scope.myLessons = [];
   $scope.viewUser = false;
   $scope.commentTab = 'material';
 
@@ -51,6 +52,20 @@ var myAccountController = function ($http, $scope, $routeParams, $location, $win
         .error(function (data, status) {
             console.log("ERROR: show question controller error", status, data);
         })
+        $http.get("/lesson")
+            .success(function (data) {
+                console.log('lesson', data.data);
+                $scope.lessons = data.data;
+                for(var i = 0; i < $scope.lessons.length; i++){
+                  if($scope.lessons[i].author == $scope.user._id){
+                    $scope.myLessons.push($scope.lessons[i]);
+                  }
+                }
+            })
+            .error(function (data, status) {
+                //alert("AJAX ERROR");
+                console.log("ERROR: show question controller error", status, data);
+            });
 
     // Mijn Bijdrage
     $http.get("/material")

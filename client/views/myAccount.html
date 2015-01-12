@@ -20,12 +20,19 @@
   <div class="col-lg-12">
     <div ng-show="tab=='lesson'">
       <h2>Lessen</h2>
-      <div class="col-lg-3 nopadding">
-        Mappenstructuur
+      <div ng-repeat="lesson in myLessons">
+
+          <div class="col-md-1">
+              <a href="#/lesson/{{lesson._id}}">
+                  <i 	class="materialIcon fa fa-2x fa-book"></i>
+              </a>
+          </div>
+          <div class="col-md-10">
+              <b>{{lesson.title | limitTo: 30}}</b><br>
+              <span>{{lesson.description | limitTo: 300}}</span>
+          </div>
       </div>
-      <div class="col-lg-9">
-        Lesseninhoud
-      </div>
+      <hr>
 
     </div>
     <div ng-show="tab=='material'">
@@ -36,27 +43,15 @@
       <div ng-repeat="material in myMaterial" class="col-lg-12">
         <h4><a href="#/material/{{material._id}}"><i class="fa fa-edit"></i></a>{{material.title}}</h4>
         <span>Type: {{material.type}}, likes: {{material.likes}}, views: {{material.views}}</span>
-        <span>beschrijving: {{material.description}}</span>
+        <span>beschrijving: {{material.description | limitTo : 300}}</span>
       </div>
     </div>
     <div ng-show="tab=='comment'">
       <h2>Reacties</h2>
-      <ul class="nav nav-tabs">
-        <li ng-model="commentTab" ng-click="commentTab = 'material'" role="presentation" ng-class="{active : commentTab=='material'}"><a>Materiaal</a></li>
-        <li ng-model="commentTab" ng-click="commentTab = 'lesson'" role="presentation" ng-class="{active : commentTab=='lesson'}"><a>Lessen</a></li>
-      </ul>
-      <div class="tabContent">
-        <div ng-show="commentTab=='material'">
-          <h3> Materialreacties </h3>
           <span ng-hide="myMaterialComments[0]">Nog geen reactie geplaatst </span>
           <div ng-repeat="comment in myMaterialComments">
             <span>{{comment.description}} <span style="font-size: 10px"> op {{comment.publishdate}} </span>( reactie op: <a href="#/material/{{comment.original}}">{{comment.originalName}}</a>)</span>
           </div>
-        </div>
-        <div ng-show="commentTab=='lesson'">
-          <h3> Lessons </h3>
-        </div>
-      </div>
     </div>
     <div ng-show="tab=='contribution'">
       <h2>Bijdrage</h2>

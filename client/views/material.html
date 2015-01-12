@@ -58,13 +58,13 @@
     <div ng-show="materialTab=='overview'">
       <h3> Samenvatting </h3>
       <p>
-        <span>{{randomViews}} weergaven</span>
+        <span>{{material.views}} weergaven</span>
         <br>
-        <span>{{randomLikes}} likes </span>
+        <span>{{material.likes}} likes </span>
         <br>
         <span>{{material.comments.length}} reacties</span>
         <br>
-        <span>{{material.description}}</span>
+        <span>{{material.description | limitTo : 300}}...</span>
       </p>
     </div>
 
@@ -90,7 +90,7 @@
       <h3> Clones</h3>
       <div ng-show="materialClones[0]">
         <div ng-repeat="version in materialClones">
-          <span><a href="#/material/{{version._id}}"><i class="fa fa-edit"></i></a>{{version.title}}, {{version.description}}, {{version.publishdate}}</span>
+          <span><a href="#/material/{{version._id}}"><i class="fa fa-edit"></i></a>{{version.title}}, {{version.description | limitTo : 300}}, {{version.publishdate}}</span>
           <a href="#/user/{{version.author}}">door {{version.authorName}}</a>
           <hr>
         </div>

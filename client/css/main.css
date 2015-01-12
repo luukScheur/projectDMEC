@@ -213,6 +213,7 @@ padding: 5px;
 }
 .materialObject {
   width: 24%;
+  min-height: 170px;
   margin: 0.5%;
   padding: 0;
 }
@@ -229,6 +230,7 @@ padding: 5px;
   background-color: white !important;
   color: rgb(166,166,166);
   padding: 7px;
+  min-height: 54px;
 }
 .materialObject a{
   color: white;

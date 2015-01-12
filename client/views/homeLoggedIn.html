@@ -95,11 +95,32 @@
 				<h3> Wat wordt er nu bekeken? </h3>
 				<hr class="homepageHR">
 				<!-- Random lessen showen -->
+					<div ng-repeat="lesson in lessons | limitTo:3">
+
+							<div class="col-md-1">
+									<a href="#/lesson/{{lesson._id}}">
+											<i 	class="materialIcon fa fa-2x fa-book"></i>
+									</a>
+							</div>
+							<div class="col-md-10">
+									<b>{{lesson.title | limitTo: 30}}</b><br>
+									<span>{{lesson.description | limitTo: 30}}</span>
+							</div>
+					</div>
+					<hr>
 			</div>
 			<div ng-show="{{block}} == 5">
 				<h3> Tagscloud </h3>
 				<hr class="homepageHR">
-				<!-- Michael get here some random tags dan -->
+				<div ng-repeat="lesson in lessons | limitTo:3">
+
+					<a href="#/lesson/{{lesson._id}}">
+						<div class="col-md-10" ng-repeat="tag in lesson.tags | limitTo:2">
+								<b>{{tag}}</b><br>
+						</div>
+					</a>
+				</div>
+				<hr>
 			</div>
 			<div ng-show="{{block}} == 6">
 				<h3> Algemene discussie </h3>

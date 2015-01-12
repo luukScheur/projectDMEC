@@ -1,8 +1,9 @@
 var makeLessonController = function ($http, $scope, $routeParams, $location, $window) {
 	var socket = {};
 	socket = io.connect('http://localhost:3000');
+		$scope.materialTab = 'allMaterial';
 
-    //get user iD
+		//get user iD
     $http.get("/getUser")
         .success(function (data) {
             if(!data.data){ console.log('niet ingelogd!'); $window.location = '/#/home'; } else {

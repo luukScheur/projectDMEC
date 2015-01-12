@@ -1,7 +1,10 @@
-<div class="col-lg-3">
-    <h2> Filters</h2>
+<div class="col-lg-3 materialFilter">
+    <h4 style="margin-left: 10px">Filter </h4>
+    <div>
+        <input placeholder="Zoek materiaal.." ng-model="search" id="materialSearch" type="text">
+    </div>
     <br>
-    <span>Sorteren op</span>
+    <span style="margin-left: 10px">Sorteren op</span>
     <br>
     <select ng-model="sort">
         <option value='views'>Views</option>
@@ -15,17 +18,15 @@
     <br><br>
     <span>Soort materiaal</span>
     <br>
-
-    <div id="materialTypesFilter" ng-repeat="type in materialTypes" ng-click="toggleSelection(type)">
-        <input type="checkbox"
-               ng-checked="selectedTypes.indexOf('{{type}}') > -1"
-               ng-value="type">
-        {{type}}
+    <div id="materialTypesFilter" ng-class="{'filterColor': {{$index}}%2 == 0 }" ng-repeat="type in materialTypes" ng-click="toggleSelection(type)">
+      <input type="checkbox"
+        ng-checked="selectedTypes.indexOf('{{type}}') > -1"
+        ng-value="type">
+      {{type}}
     </div>
-
 </div>
 
-<div class="col-lg-9 videosSidebar">
+<div class="col-lg-9 materialOverview">
     <h2>Materiaal</h2>
 
     <div class="col-md-12">
@@ -37,11 +38,11 @@
         </ul>
         <div class="tabContent ">
             <div ng-show="materialTab=='allMaterial'">
-                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block"
+                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 materialObject {{item.type}} .block"
                      ng-repeat="item in material | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
                     <span class="materialDate">{{item.publishdate |limitTo:10}}</span>
                     <span class="materialFavo"><i ng-click="toggleFavorite(item._id)" class="{{item.favoriteIcon}}"></i></span>
-                    <div ng-click="toggleFavorite(item._id)">
+                    <div>
                         <div class="bigIcon col-md-12">
                             <div class="bigIconIcon col-md-12">
                                 <i 	class="fa fa-4x"
@@ -70,11 +71,11 @@
             </div>
 
             <div ng-show="materialTab=='favoriteMaterial'">
-                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block"
+                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 materialObject {{item.type}} .block"
                      ng-repeat="item in favoriteMaterial | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
                     <span class="materialDate">{{item.publishdate |limitTo:10}}</span>
                     <span class="materialFavo"><i ng-click="toggleFavorite(item._id)" class="{{item.favoriteIcon}}"></i></span>
-                    <div ng-click="toggleFavorite(item._id)">
+                    <div>
                         <div class="bigIcon col-md-12">
                             <div class="bigIconIcon col-md-12">
                                 <i 	class="fa fa-4x"
@@ -104,11 +105,11 @@
             </div>
 
             <div ng-show="materialTab=='myMaterial'">
-                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block"
+                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 materialObject {{item.type}} .block"
                      ng-repeat="item in myMaterial | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
                     <span class="materialDate">{{item.publishdate |limitTo:10}}</span>
                     <span class="materialFavo"><i ng-click="toggleFavorite(item._id)" class="{{item.favoriteIcon}}"></i></span>
-                    <div ng-click="toggleFavorite(item._id)">
+                    <div>
                         <div class="bigIcon col-md-12">
                             <div class="bigIconIcon col-md-12">
                                 <i 	class="fa fa-4x"
@@ -138,11 +139,11 @@
             </div>
 
             <div ng-show="materialTab=='usedMaterial'">
-                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 {{item.type}} .block"
+                <div ng-click="addMaterialToLesson(item._id, item.type)" class="col-lg-3 materialObject {{item.type}} .block"
                      ng-repeat="item in usedMaterial | filterTypes: selectedTypes | filter : {'title': search}|  orderBy : sort : sortOrder">
                     <span class="materialDate">{{item.publishdate |limitTo:10}}</span>
                     <span class="materialFavo"><i ng-click="toggleFavorite(item._id)" class="{{item.favoriteIcon}}"></i></span>
-                    <div ng-click="toggleFavorite(item._id)">
+                    <div>
                         <div class="bigIcon col-md-12">
                             <div class="bigIconIcon col-md-12">
                                 <i 	class="fa fa-4x"
@@ -177,12 +178,13 @@
 
     </div>
     <div class="col-lg-2 {{material.type}} .block" ng-repeat="material in lessonMaterials">
-        </br> <i ng-click = "addMaterialLeft(material.materialId)" class="fa fa-chevron-circle-left fa-3x"></i>
+        </br>
+        <i ng-click = "addMaterialLeft(material.materialId)" class="fa fa-chevron-circle-left fa-3x"></i>
         <i ng-click = "addMaterialRight(material.materialId)" class="fa fa-chevron-circle-right fa-3x"></i></br>
     </div>
     <div>
         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-            Klaar!
+            Les opslaan
         </button>
 
         <!-- Modal -->
@@ -221,5 +223,3 @@
 
     </div>
 </div>
-
-

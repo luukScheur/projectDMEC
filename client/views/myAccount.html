@@ -20,6 +20,7 @@
   <div class="col-lg-12">
     <div ng-show="tab=='lesson'">
       <h2>Lessen</h2>
+      <a href="#/makeLesson"<button class="btn btn-success">Nieuwe les</button></a>
       <div ng-repeat="lesson in myLessons">
 
           <div class="col-md-1">
@@ -27,7 +28,7 @@
                   <i 	class="materialIcon fa fa-2x fa-book"></i>
               </a>
           </div>
-          <div class="col-md-10">
+          <div class="col-md-11">
               <b>{{lesson.title | limitTo: 30}}</b><br>
               <span>{{lesson.description | limitTo: 300}}</span>
           </div>

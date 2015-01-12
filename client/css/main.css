@@ -205,6 +205,7 @@ h3 {
 }
 .materialFilter input[type='text']{
   width: 100%;
+  color: black;
 border: none;
 padding: 5px;
 }
@@ -244,6 +245,7 @@ materialObject a:hover {
 }
 .bigIcon{
   text-align: center;
+  color: white;
   padding-left: 3px;
 padding-right: 3px;
 }

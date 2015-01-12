@@ -1,36 +1,65 @@
 <br><br>
-<div class="col-lg-2">
-    <div class="list-group">
-        <a href="#" class="list-group-item active">
-            Cras justo odio
-        </a>
-        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-        <a href="#" class="list-group-item">Morbi leo risus</a>
-        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-        <a href="#" class="list-group-item">Vestibulum at eros</a>
+<div class="col-lg-3 materialFilter">
+
+    <h4 style="margin-left: 10px">Filter </h4>
+    <div>
+        <input placeholder="Zoeken" ng-model="search" id="materialSearch" type="text">
+    </div>
+    <br>
+    <div id="materialTypesFilter" ng-class="{'filterColor': {{$index}}%2 == 0 }" ng-repeat="type in category">
+        {{type}}
+    </div>
+    <br>
+    <br>
+    <br>
+</div>
+
+<div class="col-lg-3 types">
+    <div id="materialTypesFilter" ng-class="{'typeColor': {{$index}}%2 == 0 }" ng-repeat="type in types">
+        {{type}}
+    </div>
+    <br>
+    <br>
+    <br>
+
+</div>
+
+<div class="col-lg-3 lessonOverview">
+    <br>
+    <img src="http://lorempixel.com/200/100/abstract" style = "width: 250px;" />
+    <div ng-repeat="lesson in lessons | limitTo:10" ng-click = "showItem(lesson._id)">
+
+        <div class="col-md-1">
+            <a href="#/lesson/{{lesson._id}}">
+                <i 	class="materialIcon fa fa-2x fa-book"></i>
+            </a>
+        </div>
+        <div class="col-md-10">
+            <b>{{lesson.title | limitTo: 30}}</b><br>
+            <span>{{lesson.description | limitTo: 30}}</span>
+        </div>
     </div>
 
+
 </div>
 
-<div class="col-lg-2">
-    <div class="list-group">
-        <a href="#" class="list-group-item active">
-            Cras justo odio
-        </a>
-        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-        <a href="#" class="list-group-item">Morbi leo risus</a>
-        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-        <a href="#" class="list-group-item">Vestibulum at eros</a>
+<div class="col-lg-3 lessonOverview" >
+    <br>
+    <img src="http://lorempixel.com/400/200/abstract" style = "width: 250px;" />
+    <div class="col-lg-12">
+        <br><br>
+
+        <div ng-repeat="item in lessons | filter:{'_id':  selectedItem }:true">
+            {{item.title}} </br>
+            {{item.description}}
+
+
+            <div class="btn-group btn-group-xs" role="group" aria-label="...">
+                <button type="button" class="btn btn-default">Bijdr.</button>
+                <button  type="button" class="btn btn-default"><a href="#/lesson/{{item._id}}">Bekijk</a></button>
+                <button type="button" class="btn btn-default">Dupli.</button>
+            </div>
+            <br>
+        </div>
     </div>
-
-</div>
-
-<div class="col-lg-2">
-    <img src="http://lorempixel.com/200/100/abstract" />
-
-</div>
-
-<div class="col-lg-6">
-    <img src="http://lorempixel.com/400/200/abstract" />
-
 </div>

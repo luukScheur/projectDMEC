@@ -43,6 +43,7 @@ var homeLoggedInController = function ($scope, $http, $routeParams, $location, $
 
 	$scope.registerUser = function(data){
 		$scope.user = data;
+		document.getElementById('myAccountText').innerHTML = $scope.user.name;
 		$scope.userID = data._id;
 		$scope.selectedBlocks = data.blocks;
 		$scope.otherBlocks();
@@ -61,7 +62,7 @@ var homeLoggedInController = function ($scope, $http, $routeParams, $location, $
 	$scope.loginUser = function () {
 		$http.post("/postUser/" + $scope.userID)
 				.success(function (data) {
-						console.log(data);
+						console.log('nieuwe user: ', data);
 						$scope.getMaterials();
 				})
 				.error(function (data, status) {
@@ -124,5 +125,15 @@ var homeLoggedInController = function ($scope, $http, $routeParams, $location, $
 		}
 		$scope.saveBlocks();
 	};
+
+    $http.get("/lesson")
+        .success(function (data) {
+            console.log('lesson', data.data);
+            $scope.lessons = data.data;
+        })
+        .error(function (data, status) {
+            //alert("AJAX ERROR");
+            console.log("ERROR: show question controller error", status, data);
+        });
 
 };

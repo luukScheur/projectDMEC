@@ -1,62 +1,59 @@
-<div class="col-md-6">
+<div class="col-lg-6 materialOverview" >
+    <br>
+    <div ng-repeat="item in lesson.material | filter:{'_id':  selectedItem }:true">
+        {{item.title}} </br><img src="http://lorempixel.com/400/200/abstract" style = "width: 550px;" />
 
-    <div class="col-lg-8">
-<br><br>
-
-        <div ng-repeat="item in lesson.material | filter:{'_id':  selectedItem }:true">
-            {{item.title}} </br>
-            {{item.description}}
+        {{item.description}}
     </div>
-</div>
-        <div class="col-lg-4">
+    <br><br><br>
+    <ul class="nav nav-tabs">
+        <li ng-model="materialTab" ng-click="materialTab = 'overview'" role="presentation" ng-class="{active : materialTab=='overview'}"><a>Samenvatting</a></li>
+        <li ng-model="materialTab" ng-click="materialTab = 'comments'" role="presentation" ng-class="{active : materialTab=='comments'}"><a>Reacties (5)</a></li>
+        <li ng-model="materialTab" ng-click="materialTab = 'old'" role="presentation" ng-class="{active : materialTab=='clones'}"><a>Oude versies (2)</a></li>
+        <li ng-model="materialTab" ng-click="materialTab = 'clones'" role="presentation" ng-class="{active : materialTab=='clones'}"><a>Gegenereerde versies (1)</a></li>
+    </ul>
+    <div class="tabContent">
+        <div ng-show="materialTab=='overview'">
+            <h3> Samenvatting </h3>
+            <p>
+                {{lesson.description}}
+            </p>
+        </div>
 
-                <div class="col-lg-6 {{item.type}} .block"
-                     ng-repeat="item in lesson.material" ng-click = "showItem(item._id)">
-                    <h4>{{item.title}}</h4><i id="favoriteIcon" ng-click="toggleFavorite(item._id)"
-                                              class="{{item.favoriteIcon}}"></i>
+        <div ng-show="materialTab=='comments'">
+            <h3> Reacties</h3>
+            <span> Nog geen ouder versies</span>
+        </div>
 
-                    <p> {{item.type}} </p>
-                    <span>Door: {{item.author}}</span>
-                </div>
-
-            </div>
-
+        <div ng-show="materialTab=='old'">
+            <h3> Clones</h3>
+            <span> Nog geen ouder versies</span>
 
         </div>
 
-</div>
-<div class="col-md-12">
-  <ul class="nav nav-tabs">
-    <li ng-model="materialTab" ng-click="materialTab = 'overview'" role="presentation" ng-class="{active : materialTab=='overview'}"><a>Samenvatting</a></li>
-    <li ng-model="materialTab" ng-click="materialTab = 'comments'" role="presentation" ng-class="{active : materialTab=='comments'}"><a>Reacties (5)</a></li>
-    <li ng-model="materialTab" ng-click="materialTab = 'old'" role="presentation" ng-class="{active : materialTab=='clones'}"><a>Oude versies (2)</a></li>
-      <li ng-model="materialTab" ng-click="materialTab = 'clones'" role="presentation" ng-class="{active : materialTab=='clones'}"><a>Gegenereerde versies (1)</a></li>
-  </ul>
-  <div class="tabContent">
-    <div ng-show="materialTab=='overview'">
-      <h3> Samenvatting </h3>
-      <p>
-            {{lesson.description}}
-      </p>
+        <div ng-show="materialTab=='clones'">
+            <h3> Clones</h3>
+
+            <span> Nog geen clones gemaakt </span>
+
+        </div>
+    </div></div>
+<div class="col-lg-6">
+
+    <div class="col-lg-12 materialOverview"
+         ng-repeat="material in lesson.material" ng-click = "showItem(material._id)">
+
+        <i 	class="materialIcon fa fa-2x"
+              ng-class="{
+												'fa-file-pdf-o': material.type=='pdf',
+												'fa-file-word-o' : material.type=='word',
+												'fa-youtube' : material.type=='youtube',
+												'fa-file-image-o' : material.type=='image',
+												'fa-file-powerpoint-o' : material.type=='powerpoint',
+												'fa-file-excel-o' : material.type=='excel',
+												'fa-tasks' : material.type=='opdracht'
+											}"></i>
+        {{material.title}}
     </div>
 
-    <div ng-show="materialTab=='comments'">
-        <h3> Reacties</h3>
-        <span> Nog geen ouder versies</span>
-    </div>
-
-      <div ng-show="materialTab=='old'">
-          <h3> Clones</h3>
-          <span> Nog geen ouder versies</span>
-
-      </div>
-
-    <div ng-show="materialTab=='clones'">
-      <h3> Clones</h3>
-
-        <span> Nog geen clones gemaakt </span>
-
-    </div>
-
-  </div>
 </div>

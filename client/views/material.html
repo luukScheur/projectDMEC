@@ -1,34 +1,45 @@
-<div class="col-md-6">
+<div class="col-md-12 viewMaterial">
   <div ng-show="new==true">
     <h2> nieuw materiaal </h2>
   </div>
-  <div ng-show="new==false">
-    <h2> Materiaal </h2>
-    <a ng-show="material.original" href="#/material/{{material.original}}"><button class="btn btn-primary">Origineel</button></a>
-  </div>
+
   <form>
-    <label> Titel </label>
-    <br>
-    <input ng-model="title" type="text">
-    <br>
-    <label> Omschrijving </label>
+    <div class="col-md-10" style="padding-left: 0; padding-bottom: 5px;">
+    <input ng-model="title" placeholder="titel" type="text">
+    </div>
+    <div class="col-md-2" style="text-align: right">
+      <div ng-show="new==false">
+        <i style="color: black" class="fa fa-lg"
+          ng-class="{
+                'fa-star-o': favorited==false,
+                'fa-star' : favorited==true
+              }"
+          ng-click="toggleFavorite()"></i>
+        <a ng-show="material.original" href="#/material/{{material.original}}"><button class="btn btn-primary">Origineel</button></a>
+        <a href="#/material/0"><button class="btn btn-primary">Nieuw</button></a>
+      </div>
+    </div>
     <br>
     <textarea ng-model="description"></textarea>
     <br>
-    <label> Type </label>
-    <br>
-    <select ng-disabled="new==false" ng-model="selectedType" id="selectedType" >
-      <option value="{{type}}" ng-repeat="type in materialTypes">
-        {{type}}
-      </option>
-    </select>
-    <input ng-disabled="new==false" id="image-file" type="file" />
-
     <div ng-show="new==true">
-      <button ng-disabled="title=='' || description=='' || selectedType==''" ng-click="upload()" class="btn btn-success">Uploaden</button>
+      <label> Type </label>
+      <br>
+      <select ng-disabled="new==false" ng-model="selectedType" id="selectedType" >
+        <option value="{{type}}" ng-repeat="type in materialTypes">
+          {{type}}
+        </option>
+      </select>
     </div>
     <div ng-show="new==false">
-      <button ng-disabled="title=='' || description=='' || selectedType==''" ng-click="edit()" class="btn btn-success">Bewerken</button>
+      <span> Type: {{material.type}}</span>
+    </div>
+
+    <div ng-show="new==true">
+      <button ng-disabled="title=='' || description=='' || selectedType==''" ng-click="upload()" class="saveButton btn btn-success">Uploaden</button>
+    </div>
+    <div ng-show="new==false">
+      <button ng-disabled="title=='' || description=='' || selectedType==''" ng-click="edit()" class="saveButton btn btn-success">Bewerken</button>
     </div>
   </form>
 
@@ -36,7 +47,8 @@
     {{message}}
   </div>
 </div>
-<div class="col-md-12" ng-show="new==false">
+<br><br>
+<div class="col-md-12 materialSummary" ng-show="new==false">
   <ul class="nav nav-tabs">
     <li ng-model="materialTab" ng-click="materialTab = 'overview'" role="presentation" ng-class="{active : materialTab=='overview'}"><a>Samenvatting</a></li>
     <li ng-model="materialTab" ng-click="materialTab = 'comments'" role="presentation" ng-class="{active : materialTab=='comments'}"><a>Reacties ({{material.comments.length}})</a></li>
